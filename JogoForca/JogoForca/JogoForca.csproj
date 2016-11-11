@@ -285,6 +285,16 @@
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JogoForca.Dominio\JogoForca.Dominio.csproj">
+      <Project>{42004646-a908-4750-abea-c830106e828e}</Project>
+      <Name>JogoForca.Dominio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JogoForca.Repositorio\JogoForca.Repositorio.csproj">
+      <Project>{36d003e4-af0c-4f7b-8eec-7e541df991df}</Project>
+      <Name>JogoForca.Repositorio</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

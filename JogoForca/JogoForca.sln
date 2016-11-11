@@ -5,6 +5,16 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JogoForca", "JogoForca\JogoForca.csproj", "{8C06F148-6BDD-429B-9354-8D6B4EA46EB5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. WebApp + API", "1. WebApp + API", "{C77362B9-75D9-44AB-A074-0603BD0DCDA8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Domínio", "2. Domínio", "{21738049-B08E-4CB9-B24B-7B4E25437BA8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Reposistorio", "3. Reposistorio", "{32336867-5B61-472B-8CF8-CB5D26285AA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JogoForca.Dominio", "JogoForca.Dominio\JogoForca.Dominio.csproj", "{42004646-A908-4750-ABEA-C830106E828E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JogoForca.Repositorio", "JogoForca.Repositorio\JogoForca.Repositorio.csproj", "{36D003E4-AF0C-4F7B-8EEC-7E541DF991DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +25,21 @@ Global
 		{8C06F148-6BDD-429B-9354-8D6B4EA46EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C06F148-6BDD-429B-9354-8D6B4EA46EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C06F148-6BDD-429B-9354-8D6B4EA46EB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42004646-A908-4750-ABEA-C830106E828E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42004646-A908-4750-ABEA-C830106E828E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42004646-A908-4750-ABEA-C830106E828E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42004646-A908-4750-ABEA-C830106E828E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36D003E4-AF0C-4F7B-8EEC-7E541DF991DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36D003E4-AF0C-4F7B-8EEC-7E541DF991DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36D003E4-AF0C-4F7B-8EEC-7E541DF991DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36D003E4-AF0C-4F7B-8EEC-7E541DF991DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8C06F148-6BDD-429B-9354-8D6B4EA46EB5} = {C77362B9-75D9-44AB-A074-0603BD0DCDA8}
+		{42004646-A908-4750-ABEA-C830106E828E} = {21738049-B08E-4CB9-B24B-7B4E25437BA8}
+		{36D003E4-AF0C-4F7B-8EEC-7E541DF991DF} = {32336867-5B61-472B-8CF8-CB5D26285AA6}
 	EndGlobalSection
 EndGlobal
