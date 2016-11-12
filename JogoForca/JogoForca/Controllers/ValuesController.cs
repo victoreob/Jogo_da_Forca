@@ -1,4 +1,6 @@
-﻿using System;
+﻿using JogoForca.Dominio.Repositorio;
+using JogoForca.Servicos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,6 +12,8 @@ namespace JogoForca.Controllers
     [Authorize]
     public class ValuesController : ApiController
     {
+        private IPalavraRepositorio palavras = ServicoDeDependencias.MontarPalavraRepositorio();
+
         // GET api/values
         public IEnumerable<string> Get()
         {
