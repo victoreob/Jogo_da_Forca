@@ -10,14 +10,14 @@ using System.Web.Http;
 namespace JogoForca.Controllers
 {
     [Authorize]
-    public class ValuesController : ApiController
+    public class PalavrasController : ApiController
     {
         private IPalavraRepositorio palavras = ServicoDeDependencias.MontarPalavraRepositorio();
 
         // GET api/values
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return null;
         }
 
         // GET api/values/5
