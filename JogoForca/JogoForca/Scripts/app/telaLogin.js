@@ -2,6 +2,7 @@ class TelaLogin {
 
   constructor(seletor) {
     this.$elem = $(seletor);
+    this.usuarios = new Usuarios();
     this.registrarBindsEventos();
     this.renderizarEstadoInicial();
   }
@@ -29,9 +30,24 @@ class TelaLogin {
         self.$btnSubmit.text('Carregando...');
         self.$btnSubmit.attr('disabled', true);
         setTimeout(function () {
-          marvelflix.renderizarTela('principal');
+          jogoDaForca.renderizarTela('principal');
         }, 2000);
       }
+    });
+    this.$btnSubmit.click(
+      function () {
+        let usuarioASerSalvo = {
+          nome: $('#usuario').val(),
+          pontuacao: 0,
+          dificuldade: $('#dificuldade').val()
+        }
+        this.salvarUsuarioNoLocalStorage(usuarioASerSalvo);
+    });
+  }
+
+  salvarUsuarioNoLocalStorage(usuario) {
+    this.usuarios.cadastrar(usuario).done((res) => {
+      console.log('res', res);
     });
   }
 
