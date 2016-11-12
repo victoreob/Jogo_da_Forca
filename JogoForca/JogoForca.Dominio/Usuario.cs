@@ -12,6 +12,6 @@ namespace JogoForca.Dominio.Models
         public int Id { get; set; }
         public string Nome { get; set; }
         public int Pontuacao { get; set; }
-
+        public string Dificuldade { get; set; }
     }
 }

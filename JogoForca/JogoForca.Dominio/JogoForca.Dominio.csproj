@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Palavra.cs" />
-    <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Palavra.cs" />
+    <Compile Include="Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio\IPalavraRepositorio.cs" />
     <Compile Include="Repositorio\IUsuarioRepositorio.cs" />
