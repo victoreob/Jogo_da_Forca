@@ -15,7 +15,9 @@ namespace JogoForca.Repositorio.Repositorios
         {
             using (var context = new ContextoDeDados())
             {
-                
+                usuario.Pontuacao = pontos;
+                context.Entry<Usuario>(usuario).State = EntityState.Modified;
+                context.SaveChanges();
             }
         }
 
