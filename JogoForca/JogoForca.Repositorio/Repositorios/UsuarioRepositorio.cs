@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using JogoForca.Dominio.Models;
+using System.Data.Entity;
 
 namespace JogoForca.Repositorio.Repositorios
 {
@@ -22,7 +23,13 @@ namespace JogoForca.Repositorio.Repositorios
 
         public void Criar(Usuario usuario)
         {
-            throw new NotImplementedException();
+
+            using (var context = new ContextoDeDados())
+            {
+                context.Entry<Usuario>(usuario).State = EntityState.Added;
+                context.SaveChanges();
+            }
+
         }
 
         public List<Usuario> Ranking()
