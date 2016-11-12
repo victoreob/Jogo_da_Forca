@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JogoForca.Dominio.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,8 @@ namespace JogoForca.Dominio.Repositorio
     public interface IPalavraRepositorio
     {
 
-
+        IList<Palavra> ListaDePalavras();
+        IList<Palavra> ListaDePalavrasCom12Caracteres();
 
     }
 }

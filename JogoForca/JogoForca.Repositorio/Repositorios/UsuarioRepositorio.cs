@@ -13,12 +13,29 @@ namespace JogoForca.Repositorio.Repositorios
     {
         public void AdicionarPontos(Usuario usuario, int pontos)
         {
-            throw new NotImplementedException();
+            using (var context = new ContextoDeDados())
+            {
+                usuario.Pontuacao = pontos;
+                context.Entry<Usuario>(usuario).State = EntityState.Modified;
+                context.SaveChanges();
+            }
         }
 
-        public Usuario BuscarPorNome(string nome)
+        public IList<Usuario> BuscarPorNome(string nome)
         {
-            throw new NotImplementedException();
+            using (var context = new ContextoDeDados())
+            {
+                IList<Usuario> listaDeUsuario;
+
+                if (nome != null)
+                {
+                    listaDeUsuario = context.Usuario.Where(u => u.Nome.Contains(nome)).ToList();
+                    return listaDeUsuario;
+                }
+
+                listaDeUsuario = context.Usuario.ToList();
+                return listaDeUsuario;
+            }
         }
 
         public void Criar(Usuario usuario)
@@ -32,14 +49,24 @@ namespace JogoForca.Repositorio.Repositorios
 
         }
 
-        public List<Usuario> Ranking()
+        public IList<Usuario> Ranking()
         {
-            throw new NotImplementedException();
+            using (var context = new ContextoDeDados())
+            {
+                IList<Usuario> usuariosOrdenados;
+                usuariosOrdenados = context.Usuario.OrderBy(u => u.Pontuacao).ToList();
+                return usuariosOrdenados;
+            }
         }
 
-        public void ResetarPontos()
+        public void ResetarPontos(Usuario usuario)
         {
-            throw new NotImplementedException();
+            using (var context = new ContextoDeDados())
+            {
+                usuario.Pontuacao = 0; 
+                context.Entry<Usuario>(usuario).State = EntityState.Modified;
+                context.SaveChanges();
+            }
         }
     }
 }
