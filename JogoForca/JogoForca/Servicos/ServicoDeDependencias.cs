@@ -11,12 +11,12 @@ namespace JogoForca.Servicos
     {
         public static IPalavraRepositorio MontarPalavraRepositorio()
         {
-            return new PalavraRepositorio();
+            return new PalavraServico();
         }
 
         public static IUsuarioRepositorio MontarUsuarioRepositorio()
         {
-            return new UsuarioRepositorio();
+            return new UsuarioServico();
         }
     }
 }
