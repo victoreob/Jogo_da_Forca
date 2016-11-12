@@ -13,7 +13,10 @@ namespace JogoForca.Repositorio.Repositorios
     {
         public void AdicionarPontos(Usuario usuario, int pontos)
         {
-            throw new NotImplementedException();
+            using (var context = new ContextoDeDados())
+            {
+                
+            }
         }
 
         public IList<Usuario> BuscarPorNome(string nome)
@@ -49,11 +52,13 @@ namespace JogoForca.Repositorio.Repositorios
             throw new NotImplementedException();
         }
 
-        public void ResetarPontos()
+        public void ResetarPontos(Usuario usuario)
         {
             using (var context = new ContextoDeDados())
             {
-
+                usuario.Pontuacao = 0; 
+                context.Entry<Usuario>(usuario).State = EntityState.Modified;
+                context.SaveChanges();
             }
         }
     }
