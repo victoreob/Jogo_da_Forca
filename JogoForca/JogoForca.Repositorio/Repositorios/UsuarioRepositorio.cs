@@ -16,9 +16,21 @@ namespace JogoForca.Repositorio.Repositorios
             throw new NotImplementedException();
         }
 
-        public Usuario BuscarPorNome(string nome)
+        public IList<Usuario> BuscarPorNome(string nome)
         {
-            throw new NotImplementedException();
+            using (var context = new ContextoDeDados())
+            {
+                IList<Usuario> listaDeUsuario;
+
+                if (nome != null)
+                {
+                    listaDeUsuario = context.Usuario.Where(u => u.Nome.Contains(nome)).ToList();
+                    return listaDeUsuario;
+                }
+
+                listaDeUsuario = context.Usuario.ToList();
+                return listaDeUsuario;
+            }
         }
 
         public void Criar(Usuario usuario)
@@ -39,7 +51,10 @@ namespace JogoForca.Repositorio.Repositorios
 
         public void ResetarPontos()
         {
-            throw new NotImplementedException();
+            using (var context = new ContextoDeDados())
+            {
+
+            }
         }
     }
 }
