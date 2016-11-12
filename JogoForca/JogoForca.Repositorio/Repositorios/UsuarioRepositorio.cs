@@ -49,9 +49,14 @@ namespace JogoForca.Repositorio.Repositorios
 
         }
 
-        public List<Usuario> Ranking()
+        public IList<Usuario> Ranking()
         {
-            throw new NotImplementedException();
+            using (var context = new ContextoDeDados())
+            {
+                IList<Usuario> usuariosOrdenados;
+                usuariosOrdenados = context.Usuario.OrderBy(u => u.Pontuacao).ToList();
+                return usuariosOrdenados;
+            }
         }
 
         public void ResetarPontos(Usuario usuario)
