@@ -11,6 +11,7 @@ namespace JogoForca.Dominio.Repositorio
     {
         IList<Usuario> Ranking();
         Usuario BuscarPorNome(string nome);
+        Usuario BuscarPorId(int id);
         void Criar(Usuario usuario);
         void AdicionarPontos(Usuario usuario);
         void ResetarPontos(Usuario usuario);
