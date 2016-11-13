@@ -9,22 +9,20 @@ namespace JogoForca.Servicos
 {
     public class ServicoDeDependencias
     {
-        public static PalavraServico MontarPalavraRepositorio()
-        {   
-            PalavraServico palavraServico =
-                new PalavraServico(
-                    new PalavraRepositorio());
-
-            return palavraServico;
+        public static PalavraServico MontarPalavraServico
+        {
+            get
+            {
+                return new PalavraServico(new PalavraRepositorio());
+            }               
         }
 
-        public static UsuarioServico MontarUsuarioRepositorio()
+        public static UsuarioServico MontarUsuarioServico
         {
-            UsuarioServico usuarioServico =
-                new UsuarioServico(
-                    new UsuarioRepositorio());
-
-            return usuarioServico;
+            get
+            {
+                return new UsuarioServico(new UsuarioRepositorio());
+            }
         }
     }
 }
