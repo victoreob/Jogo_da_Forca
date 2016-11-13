@@ -19,12 +19,11 @@ namespace JogoForca.Dominio
         }
 
 
-        public IList<Usuario> BuscarUsuarioPorNome(Usuario usuario)
+        public Usuario BuscarUsuarioPorNome(string nomeUsuario)
         {
-            var nome = usuario.Nome;
-            IList<Usuario> listaDosUsuarios = usuarioRepositorio.BuscarPorNome(nome);
+            return usuarioRepositorio.BuscarPorNome(nomeUsuario);
+        }
 
-            return listaDosUsuarios;
         }
 
         public void CriarUsuario(Usuario usuario)
@@ -49,10 +48,7 @@ namespace JogoForca.Dominio
 
         public IList<Usuario> CriarRanqueamento()
         {
-            IList<Usuario> listaRanqueada;
-            listaRanqueada = usuarioRepositorio.Ranking();
-
-            return listaRanqueada;
+            return usuarioRepositorio.Ranking();
         }
 
     }
