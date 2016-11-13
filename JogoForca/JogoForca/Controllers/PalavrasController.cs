@@ -1,4 +1,6 @@
-﻿using JogoForca.Dominio.Repositorio;
+﻿using JogoForca.Dominio;
+using JogoForca.Dominio.Models;
+using JogoForca.Dominio.Repositorio;
 using JogoForca.Servicos;
 using System;
 using System.Collections.Generic;
@@ -6,35 +8,29 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace JogoForca.Controllers
 {
 
     public class PalavrasController : ApiController
     {
-        //Gabriel: Acho que isso não precisa. \/
-        //private IPalavraRepositorio palavras = ServicoDeDependencias.MontarPalavraRepositorio();
+        private PalavraServico palavraServico = ServicoDeDependencias.MontarPalavraServico();
 
-        // GET api/values
-        public IEnumerable<string> Get()
+        // GET api/palavras/normal
+        [Route("api/palavras/normal")]
+        [ResponseType(typeof(IList<Palavra>))]
+        public IHttpActionResult GetPalavrasNivelNormal()
         {
-            return null;
-        }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-        // GET api/values/5
-        public string Get(int id)
-        {
-            return "value";
-        }
+            IList<Palavra> palavras = palavraServico.ListaDePalavrasRandomNivelNormal();
 
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
-        }
+            if (palavras == null)
+                return NotFound();
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
-        {
+            return Ok(palavras);
         }
 
         // DELETE api/values/5
