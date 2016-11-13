@@ -53,7 +53,7 @@ namespace JogoForca.Repositorio.Repositorios
             using (var context = new ContextoDeDados())
             {
                 IList<Usuario> usuariosOrdenados;
-                usuariosOrdenados = context.Usuario.OrderBy(u => u.Pontuacao).ToList();
+                usuariosOrdenados = context.Usuario.OrderBy(u => u.Pontuacao).ToArray();
                 return usuariosOrdenados;
             }
         }
