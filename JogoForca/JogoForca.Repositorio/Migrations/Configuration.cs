@@ -10,13 +10,11 @@ namespace JogoForca.Repositorio.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(JogoForca.Repositorio.ContextoDeDados context)
         {
-
-
             context.Palavra.AddOrUpdate(
                 p => p.Nome,
                 new Palavra { Nome = "Banana" },
@@ -83,7 +81,6 @@ namespace JogoForca.Repositorio.Migrations
                 new Palavra { Nome = "Odontologia" },
                 new Palavra { Nome = "Manga" }
             );
-
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
