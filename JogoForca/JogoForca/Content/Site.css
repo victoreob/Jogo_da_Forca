@@ -75,3 +75,12 @@ label {
 .nome-item {
   color: azure;
 }
+
+#container-botao-palavra {
+  padding-left: 0;
+  margin-left: 114px;
+}
+
+#btn-sortear-palavra{
+    background-color: lightyellow;
+}
