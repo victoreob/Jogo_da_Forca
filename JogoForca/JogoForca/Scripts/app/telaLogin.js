@@ -34,18 +34,17 @@ class TelaLogin {
         }, 2000);
       }
     });
-    this.$btnSubmit.click(
-      function () {
-        let usuarioASerSalvo = {
-          nome: $('#usuario').val(),
-          pontuacao: 0,
-          dificuldade: $('#dificuldade').val()
-        }
-        this.salvarUsuarioNoLocalStorage(usuarioASerSalvo);
-    });
+    this.$btnSubmit.on('click', self.salvarUsuarioNoLocalStorage.bind(self));
   }
 
-  salvarUsuarioNoLocalStorage(usuario) {
+  
+
+  salvarUsuarioNoLocalStorage() {
+    let usuarioASerSalvo = {
+      nome: $('#usuario').val(),
+      pontuacao: 0,
+      dificuldade: $('#dificuldade').val()
+    };
     this.usuarios.cadastrar(usuario).done((res) => {
       console.log('res', res);
     });
