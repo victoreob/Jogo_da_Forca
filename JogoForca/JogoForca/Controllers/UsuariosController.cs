@@ -19,7 +19,7 @@ namespace JogoForca.Controllers
 {
     public class UsuariosController : ApiController
     {
-        private UsuarioServico usuarioServico = ServicoDeDependencias.MontarUsuarioServico();
+        private UsuarioServico usuarioServico = ServicoDeDependencias.MontarUsuarioServico;
 
         // POST: api/usuarios/cadastrar
         [Route("api/usuarios/cadastrar")]
