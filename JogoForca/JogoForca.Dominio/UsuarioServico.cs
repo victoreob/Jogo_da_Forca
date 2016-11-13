@@ -1,4 +1,5 @@
-﻿using JogoForca.Dominio.Repositorio;
+﻿using JogoForca.Dominio.Models;
+using JogoForca.Dominio.Repositorio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,43 @@ namespace JogoForca.Dominio
         public UsuarioServico(IUsuarioRepositorio usuarioRepositorio)
         {
             this.usuarioRepositorio = usuarioRepositorio;
+        }
+
+
+        public IList<Usuario> BuscarUsuarioPorNome(Usuario usuario)
+        {
+            var nome = usuario.Nome;
+            IList<Usuario> listaDosUsuarios = usuarioRepositorio.BuscarPorNome(nome);
+
+            return listaDosUsuarios;
+        }
+
+        public void CriarUsuario(Usuario usuario)
+        {
+            usuarioRepositorio.Criar(usuario);
+        }
+
+        public void AdicionarPontos(Usuario usuario, int pontos)
+        {
+            usuario.Pontuacao += pontos;
+
+            usuarioRepositorio.AdicionarPontos(usuario);
+        }
+
+
+        public void ResetarPontos(Usuario usuario)
+        {
+            usuario.Pontuacao = 0;
+
+            usuarioRepositorio.ResetarPontos(usuario);
+        }
+
+        public IList<Usuario> CriarRanqueamento(Usuario usuario)
+        {
+            IList<Usuario> listaRanqueada;
+            listaRanqueada = usuarioRepositorio.Ranking();
+
+            return listaRanqueada;
         }
 
     }

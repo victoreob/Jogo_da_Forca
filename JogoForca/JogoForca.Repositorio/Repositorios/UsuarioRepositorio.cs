@@ -11,11 +11,10 @@ namespace JogoForca.Repositorio.Repositorios
 {
     public class UsuarioRepositorio : IUsuarioRepositorio
     {
-        public void AdicionarPontos(Usuario usuario, int pontos)
+        public void AdicionarPontos(Usuario usuario)
         {
             using (var context = new ContextoDeDados())
             {
-                usuario.Pontuacao = pontos;
                 context.Entry<Usuario>(usuario).State = EntityState.Modified;
                 context.SaveChanges();
             }
@@ -63,7 +62,6 @@ namespace JogoForca.Repositorio.Repositorios
         {
             using (var context = new ContextoDeDados())
             {
-                usuario.Pontuacao = 0; 
                 context.Entry<Usuario>(usuario).State = EntityState.Modified;
                 context.SaveChanges();
             }
