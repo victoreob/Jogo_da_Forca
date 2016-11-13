@@ -12,125 +12,105 @@ using System.Web.Http.Description;
 using JogoForca.Dominio.Models;
 using JogoForca.Repositorio;
 using JogoForca.Servicos;
+using JogoForca.Dominio;
+using JogoForca.Repositorio.Repositorios;
 
 namespace JogoForca.Controllers
 {
     public class UsuariosController : ApiController
     {
-        private ContextoDeDados db = new ContextoDeDados();
+        private UsuarioServico usuarioServico = ServicoDeDependencias.MontarUsuarioServico();
 
-        // POST: api/Usuarios
+        // POST: api/usuarios/cadastrar
+        [Route("api/usuarios/cadastrar")]
         [ResponseType(typeof(Usuario))]
-        public IHttpActionResult PostUsuario(Usuario usuario)
+        public IHttpActionResult PostCadastrarUsuario(Usuario usuario)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
-            ServicoDeDependencias.MontarUsuarioRepositorio().CriarUsuario(usuario);
 
-            //await db.SaveChangesAsync();
-            return CreatedAtRoute("DefaultApi", new { id = usuario.Id }, usuario);
+            usuarioServico.CriarUsuario(usuario);
+
+            Usuario usuarioCriado = usuarioServico.BuscarUsuarioPorNome(usuario.Nome);
+
+            return CreatedAtRoute("DefaultApi", new { id = usuarioCriado.Id }, usuarioCriado);
         }
 
-
+        // PUT: api//usuarios/adicionarPontos
+        [Route("api/usuarios/adicionarPontos")]
         [ResponseType(typeof(Usuario))]
-        public IHttpActionResult PostPontosUsuario(Usuario usuario)
+        public IHttpActionResult PutAdicionarPontos(Usuario usuario)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
-            ServicoDeDependencias.MontarUsuarioRepositorio().AdicionarPontos(usuario, 1);
-
-            //await db.SaveChangesAsync();
-            return CreatedAtRoute("DefaultApi", new { id = usuario.Id }, usuario);
-        }
-
-        // GET: api/Usuario/5/Resetar
-        public void ResetarPontos(Usuario usuario)
-        {
-            ServicoDeDependencias.MontarUsuarioRepositorio().ResetarPontos(usuario);
-        }
-
-        // GET: api/Usuarios
-        public IList<Usuario> GetListUsuario(Usuario usuario)
-        {
-            return ServicoDeDependencias.MontarUsuarioRepositorio().BuscarUsuarioPorNome(usuario);            
-            
-        }
-
-
-        //GET: api/Usuarios/Ranking
-        public IList<Usuario> GetRanking()
-        {
-            return ServicoDeDependencias.MontarUsuarioRepositorio().CriarRanqueamento();
-        }
-
-        // GET: api/Usuarios/5
-        [ResponseType(typeof(Usuario))]
-        public async Task<IHttpActionResult> GetUsuario(int id)
-        {
-            Usuario usuario = await db.Usuario.FindAsync(id);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
+            usuarioServico.AdicionarPontos(usuario, 1);
+            usuario.Pontuacao++;
 
             return Ok(usuario);
         }
 
-        // PUT: api/Usuarios/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutUsuario(int id, Usuario usuario)
+        // PUT: api/usuarios/resetarPontos
+        [Route("api/usuarios/resetarPontos")]
+        [ResponseType(typeof(Usuario))]
+        public IHttpActionResult PutResetarPontos(Usuario usuario)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
-            if (id != usuario.Id)
-            {
-                return BadRequest();
-            }
+            usuarioServico.ResetarPontos(usuario);
+            usuario.Pontuacao = 0;
 
-
-            db.Entry(usuario).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UsuarioExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(usuario);
         }
 
-        
-
-        protected override void Dispose(bool disposing)
+        // GET: api/usuarios/buscarPorNome
+        [Route("api/usuarios/busarPorNome")]
+        [ResponseType(typeof(Usuario))]
+        public IHttpActionResult GetUsuarioPorNome(Usuario usuario)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            Usuario usuarioResposta = usuarioServico.BuscarUsuarioPorNome(usuario.Nome);
+
+            if (usuarioResposta == null)
+                return NotFound();
+
+            return Ok(usuarioResposta);  
         }
 
-        private bool UsuarioExists(int id)
+        // GET: api/usuarios/buscarPorId
+        [Route("api/usuarios/busarPorId")]
+        [ResponseType(typeof(Usuario))]
+        public IHttpActionResult GetUsuarioPorId(Usuario usuario)
         {
-            return db.Usuario.Count(e => e.Id == id) > 0;
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            Usuario usuarioResposta = usuarioServico.BuscarUsuarioPorId(usuario.Id);
+
+            if (usuarioResposta == null)
+                return NotFound();
+
+            return Ok(usuarioResposta);
+        }
+
+
+        //GET: api/usuarios/ranking
+        [Route("api/usuarios/buscarRanking")]
+        [ResponseType(typeof(IList<Usuario>))]
+        public IHttpActionResult GetRanking()
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            IList<Usuario> usuarios = usuarioServico.CriarRanqueamento();
+            
+            if (usuarios == null)
+                return NotFound();
+
+            return Ok(usuarios);
         }
     }
 }
