@@ -41,10 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Palavra.cs" />
+    <Compile Include="PalavraServico.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio\IPalavraRepositorio.cs" />
     <Compile Include="Repositorio\IUsuarioRepositorio.cs" />
+    <Compile Include="UsuarioServico.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

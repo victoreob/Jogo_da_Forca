@@ -9,10 +9,11 @@ using System.Web.Http;
 
 namespace JogoForca.Controllers
 {
-    [Authorize]
+
     public class PalavrasController : ApiController
     {
-        private IPalavraRepositorio palavras = ServicoDeDependencias.MontarPalavraRepositorio();
+        //Gabriel: Acho que isso não precisa. \/
+        //private IPalavraRepositorio palavras = ServicoDeDependencias.MontarPalavraRepositorio();
 
         // GET api/values
         public IEnumerable<string> Get()

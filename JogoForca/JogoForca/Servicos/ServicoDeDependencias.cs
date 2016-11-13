@@ -1,4 +1,4 @@
-﻿using JogoForca.Dominio.Repositorio;
+﻿using JogoForca.Dominio;
 using JogoForca.Repositorio.Repositorios;
 using System;
 using System.Collections.Generic;
@@ -9,14 +9,22 @@ namespace JogoForca.Servicos
 {
     public class ServicoDeDependencias
     {
-        public static IPalavraRepositorio MontarPalavraRepositorio()
-        {
-            return new PalavraServico();
+        public static PalavraServico MontarPalavraRepositorio()
+        {   
+            PalavraServico palavraServico =
+                new PalavraServico(
+                    new PalavraRepositorio());
+
+            return palavraServico;
         }
 
-        public static IUsuarioRepositorio MontarUsuarioRepositorio()
+        public static UsuarioServico MontarUsuarioRepositorio()
         {
-            return new UsuarioServico();
+            UsuarioServico usuarioServico =
+                new UsuarioServico(
+                    new UsuarioRepositorio());
+
+            return usuarioServico;
         }
     }
 }
