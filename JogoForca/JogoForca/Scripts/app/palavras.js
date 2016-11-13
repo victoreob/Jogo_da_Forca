@@ -1,19 +1,11 @@
 ﻿class Palavras {
 
-  pegarRegistrosNivelNormal() {
-    return $.get('/api/palavras', {
-      palavras: palavras
-    });
+  pegarPalavrasNivelNormal() {
+    return $.get('/api/palavras/normal');
   }
 
   pegarRegistrosNivelBh() {
-    return $.get('/api/palavras/bh', {
-      palavras: palavras
-    });
-  }
-
-  cadastrar(palavra) {
-    return $.post('/api/palavras', palavra);
+    return $.get('/api/palavras/bh');
   }
 
 }
