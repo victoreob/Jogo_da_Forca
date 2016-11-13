@@ -13,7 +13,7 @@ namespace JogoForca.Repositorio.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201611111905512_Inicial"; }
+            get { return "201611131712060_Inicial"; }
         }
         
         string IMigrationMetadata.Source

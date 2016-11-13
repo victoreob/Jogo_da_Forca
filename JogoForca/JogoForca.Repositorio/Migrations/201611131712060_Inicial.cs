@@ -8,7 +8,7 @@ namespace JogoForca.Repositorio.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.Palavra",
+                "dbo.Palavras",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -23,6 +23,7 @@ namespace JogoForca.Repositorio.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Nome = c.String(),
                         Pontuacao = c.Int(nullable: false),
+                        Dificuldade = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -31,7 +32,7 @@ namespace JogoForca.Repositorio.Migrations
         public override void Down()
         {
             DropTable("dbo.Usuario");
-            DropTable("dbo.Palavra");
+            DropTable("dbo.Palavras");
         }
     }
 }
