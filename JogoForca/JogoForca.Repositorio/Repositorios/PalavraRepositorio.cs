@@ -8,7 +8,7 @@ using JogoForca.Dominio.Models;
 
 namespace JogoForca.Repositorio.Repositorios
 {
-    public class PalavrasRepositorio : IPalavraRepositorio
+    public class PalavraRepositorio : IPalavraRepositorio
     {
 
         public IList<Palavra> ListaDePalavrasComMenosOuIgualA12Caracteres()
