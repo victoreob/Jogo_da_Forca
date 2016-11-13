@@ -11,21 +11,21 @@ namespace JogoForca.Dominio
     public class PalavraServico
     {
 
-        private IPalavraRepositorio palavraRepositorio;
+        private IPalavraRepositorio PalavraRepositorio;
 
-        public PalavraServico(IPalavraRepositorio palavraRepositorio)
+        public PalavraServico(IPalavraRepositorio PalavraRepositorio)
         {
-            this.palavraRepositorio = palavraRepositorio;
+            this.PalavraRepositorio = PalavraRepositorio;
         }
 
 
         // CODIGO DE RANDOM EM
         // http://pt.stackoverflow.com/questions/86152/embaralhar-n%c3%bameros-de-uma-lista
 
-        public IList<Palavra> ListaDePalavrasRandom()
+        public IList<Palavra> ListaDePalavrasRandomNivelNormal()
         {
             IList<Palavra> listaRandomica;
-            listaRandomica = palavraRepositorio.ListaDePalavras();
+            listaRandomica = PalavraRepositorio.ListaDePalavrasComMenosOuIgualA12Caracteres();
 
             var random = new Random();
 
@@ -41,7 +41,7 @@ namespace JogoForca.Dominio
         public IList<Palavra> ListaDePalavrasRandomNivelBH()
         {
             IList<Palavra> listaRandomica;
-            listaRandomica = palavraRepositorio.ListaDePalavrasCom12Caracteres();
+            listaRandomica = PalavraRepositorio.ListaDePalavrasComMaisQue12Caracteres();
 
             var random = new Random();
 
