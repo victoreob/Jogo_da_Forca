@@ -5,26 +5,39 @@
   <button id="btn-sincronizar-com-marvel">Sortear Palavra</button>
 </div>
 <div class="row">
-  <section id="listagem-herois" class="col-md-6">
+    <h2 id="palavra"></h2>
+    <form id="formPalpiteLetra" class="form-horizontal">
+        <div class="form-group">
+            <label for="letra" class="col-md-3">Palpite uma letra</label>
+            <div class="col-md-9">
+                <input type="text" id="letra" name="letra" class="form-control" maxlength="1">
+            </div>
+        </div>
+        <div class="form-group">
+            <div id="container-botao-letra" class="col-md-offset-3 col-md-3 pull-right">
+                <button type="submit" class="btn btn-primary">Palpitar!</button>
+            </div>
+        </div>
+    </form>
+
+    <form id="formPalpitePalavra" class="form-horizontal">
+        <div class="form-group">
+            <label for="palavra" class="col-md-3">Palpite a palavra</label>
+            <div class="col-md-9">
+                <input type="text" id="palavra" name="palavra" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div id="container-botao-palavra" class="col-md-offset-3 col-md-3 pull-right">
+                <button type="submit" class="btn btn-primary">Palpitar!</button>
+            </div>
+        </div>
+    </form>
     <ul>
-    {{#each chars}}
-      <li data-heroi-id="{{ id }}">
-        <a href="{{ link }}" target="_blank">
-          <span class="nome-item">{{ name }}</span>  
-        </a>
-        <img class="thumbnail" src="{{ thumbnail }}">
-      </li>
-    {{/each}}
-    </ul>
-  </section>
-  <section id="listagem-comics" class="col-md-6">
-    <img class="capa-comic" src="{{ selecionado.comic_thumbnail }}">
-    <ul>
-    {{#each selecionado.comics}}
+    {{#each letras}}
       <li>
-        <span class="nome-item">{{ title }}</span>
+        <span class="nome-item">{{ this }}</span>
       </li>
     {{/each}}
     </ul>
-  </section>
 </div>

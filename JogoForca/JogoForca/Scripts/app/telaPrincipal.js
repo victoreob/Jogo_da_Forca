@@ -49,13 +49,6 @@ class TelaPrincipal {
 
   }
 
-  obterProximaPagina() {
-    this.carregarERenderizarHerois(++this.paginaAtual);
-  }
-
-  obterPaginaAnterior() {
-    this.carregarERenderizarHerois(--this.paginaAtual);    
-  }
 
   sincronizar() {
 
@@ -78,13 +71,6 @@ class TelaPrincipal {
       console.error(`${err.responseJSON.code} - ${err.responseJSON.message}`);
     });
   }
-
-  cadastrarNovoHeroi(heroi) {
-    this.herois.cadastrar(heroi).done((res) => {
-      console.log('novo id', res.id);
-    });
-  }
-
   carregarERenderizarHerois(pagina) {
 
     return this.herois.pegarRegistros(pagina, this.qtdHeroisPorPagina)

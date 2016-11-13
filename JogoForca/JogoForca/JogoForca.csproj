@@ -250,6 +250,7 @@
     <Content Include="Scripts\app\jogoDaForca.js" />
     <Content Include="Scripts\app\telaLogin.js" />
     <Content Include="Scripts\app\telaPrincipal.js" />
+    <Content Include="Scripts\app\usuarios.js" />
     <Content Include="Scripts\app\_start.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
