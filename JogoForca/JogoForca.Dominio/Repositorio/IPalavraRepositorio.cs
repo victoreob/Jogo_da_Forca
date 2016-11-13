@@ -10,8 +10,8 @@ namespace JogoForca.Dominio.Repositorio
     public interface IPalavraRepositorio
     {
 
-        IList<Palavra> ListaDePalavras();
-        IList<Palavra> ListaDePalavrasCom12Caracteres();
+        IList<Palavra> ListaDePalavrasComMenosOuIgualA12Caracteres();
+        IList<Palavra> ListaDePalavrasComMaisQue12Caracteres();
 
     }
 }
