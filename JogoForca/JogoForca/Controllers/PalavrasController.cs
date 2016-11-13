@@ -33,9 +33,20 @@ namespace JogoForca.Controllers
             return Ok(palavras);
         }
 
-        // DELETE api/values/5
-        public void Delete(int id)
+        // GET api/palavras/bh
+        [Route("api/palavras/bh")]
+        [ResponseType(typeof(IList<Palavra>))]
+        public IHttpActionResult GetPalavrasNivelBH()
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            IList<Palavra> palavras = palavraServico.ListaDePalavrasRandomNivelBH();
+
+            if (palavras == null)
+                return NotFound();
+
+            return Ok(palavras);
         }
     }
 }
