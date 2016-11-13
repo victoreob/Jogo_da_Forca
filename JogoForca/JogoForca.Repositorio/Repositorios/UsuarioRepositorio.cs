@@ -20,20 +20,19 @@ namespace JogoForca.Repositorio.Repositorios
             }
         }
 
-        public IList<Usuario> BuscarPorNome(string nome)
+        public Usuario BuscarPorNome(string nome)
         {
             using (var context = new ContextoDeDados())
             {
-                IList<Usuario> listaDeUsuario;
+                return context.Usuario.FirstOrDefault(u => u.Nome.Contains(nome));
+            }
+        }
 
-                if (nome != null)
-                {
-                    listaDeUsuario = context.Usuario.Where(u => u.Nome.Contains(nome)).ToList();
-                    return listaDeUsuario;
-                }
-
-                listaDeUsuario = context.Usuario.ToList();
-                return listaDeUsuario;
+        public Usuario BuscarPorId(int id)
+        {
+            using (var context = new ContextoDeDados())
+            {
+                return context.Usuario.FirstOrDefault(u => u.Id == id);
             }
         }
 
