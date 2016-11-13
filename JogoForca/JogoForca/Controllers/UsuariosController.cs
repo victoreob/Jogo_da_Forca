@@ -34,13 +34,38 @@ namespace JogoForca.Controllers
         }
 
 
+        [ResponseType(typeof(Usuario))]
+        public IHttpActionResult PostPontosUsuario(Usuario usuario)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            ServicoDeDependencias.MontarUsuarioRepositorio().AdicionarPontos(usuario, 1);
+
+            //await db.SaveChangesAsync();
+            return CreatedAtRoute("DefaultApi", new { id = usuario.Id }, usuario);
+        }
+
+        // GET: api/Usuario/5/Resetar
+        public void ResetarPontos(Usuario usuario)
+        {
+            ServicoDeDependencias.MontarUsuarioRepositorio().ResetarPontos(usuario);
+        }
 
         // GET: api/Usuarios
-        public IQueryable<Usuario> GetUsuario()
+        public IList<Usuario> GetListUsuario(Usuario usuario)
         {
+            return ServicoDeDependencias.MontarUsuarioRepositorio().BuscarUsuarioPorNome(usuario);            
+            
+        }
 
 
-            return db.Usuario;
+        //GET: api/Usuarios/Ranking
+        public IList<Usuario> GetRanking()
+        {
+            return ServicoDeDependencias.MontarUsuarioRepositorio().CriarRanqueamento();
         }
 
         // GET: api/Usuarios/5
@@ -92,21 +117,7 @@ namespace JogoForca.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // DELETE: api/Usuarios/5
-        [ResponseType(typeof(Usuario))]
-        public async Task<IHttpActionResult> DeleteUsuario(int id)
-        {
-            Usuario usuario = await db.Usuario.FindAsync(id);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
-
-            db.Usuario.Remove(usuario);
-            await db.SaveChangesAsync();
-
-            return Ok(usuario);
-        }
+        
 
         protected override void Dispose(bool disposing)
         {
