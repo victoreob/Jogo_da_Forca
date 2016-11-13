@@ -6,7 +6,6 @@ class TelaLogin {
     this.registrarBindsEventos();
     this.renderizarEstadoInicial();
   }
-
   registrarBindsEventos() {
     this.$formLogin = $('#formLogin');
     this.$btnSubmit = this.$formLogin.find('button[type=submit]');
@@ -29,24 +28,27 @@ class TelaLogin {
       submitHandler: function () {
         self.$btnSubmit.text('Carregando...');
         self.$btnSubmit.attr('disabled', true);
+        let usuario = $('#usuario').val();
+        let dificuldade = $('#dificuldade').val();
+        self.salvarUsuarioNaSessao(usuario, dificuldade).bind(self);
         setTimeout(function () {
           jogoDaForca.renderizarTela('principal');
         }, 2000);
       }
     });
-    this.$btnSubmit.on('click', self.salvarUsuarioNoLocalStorage.bind(self));
   }
 
   
 
-  salvarUsuarioNoLocalStorage() {
+  salvarUsuarioNaSessao(usuario, dificuldade) {
     let usuarioASerSalvo = {
-      nome: $('#usuario').val(),
+      nome: usuario,
       pontuacao: 0,
-      dificuldade: $('#dificuldade').val()
+      dificuldade: dificuldade
     };
     this.usuarios.cadastrar(usuario).done((res) => {
       console.log('res', res);
+      //window.sessionStorage.setItem('usuario', res);
     });
   }
 
