@@ -8,30 +8,22 @@ using JogoForca.Dominio.Models;
 
 namespace JogoForca.Repositorio.Repositorios
 {
-    public class PalavraRepositorio : IPalavraRepositorio
+    public class PalavrasRepositorio : IPalavraRepositorio
     {
 
-        public IList<Palavra> ListaDePalavras()
+        public IList<Palavra> ListaDePalavrasComMenosOuIgualA12Caracteres()
         {
             using (var context = new ContextoDeDados())
             {
-                IList<Palavra> listaDePalavras;
-
-                listaDePalavras = context.Palavra.ToArray();
-                return listaDePalavras;
+                return context.Palavra.Where(p => p.Nome.Length <= 12).ToArray();
             }
         }
 
-        public IList<Palavra> ListaDePalavrasCom12Caracteres()
+        public IList<Palavra> ListaDePalavrasComMaisQue12Caracteres()
         {
             using (var context = new ContextoDeDados())
             {
-                IList<Palavra> listaDePalavrasNivelBH;
-
-                listaDePalavrasNivelBH =
-                    context.Palavra.Where(p => p.Nome.Length > 12).ToArray();
-
-                return listaDePalavrasNivelBH;
+                return context.Palavra.Where(p => p.Nome.Length > 12).ToArray();
             }
         }
 
