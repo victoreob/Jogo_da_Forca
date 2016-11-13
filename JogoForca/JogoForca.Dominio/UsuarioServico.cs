@@ -24,6 +24,9 @@ namespace JogoForca.Dominio
             return usuarioRepositorio.BuscarPorNome(nomeUsuario);
         }
 
+        public Usuario BuscarUsuarioPorId(int id)
+        {
+            return usuarioRepositorio.BuscarPorId(id);
         }
 
         public void CriarUsuario(Usuario usuario)
