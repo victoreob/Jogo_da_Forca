@@ -15,7 +15,7 @@ namespace JogoForca.Controllers
 
     public class PalavrasController : ApiController
     {
-        private PalavraServico palavraServico = ServicoDeDependencias.MontarPalavraServico();
+        private PalavraServico palavraServico = ServicoDeDependencias.MontarPalavraServico;
 
         // GET api/palavras/normal
         [Route("api/palavras/normal")]
