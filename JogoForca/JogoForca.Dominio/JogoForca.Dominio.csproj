@@ -41,8 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dificuldade.cs" />
+    <Compile Include="DificuldadeServico.cs" />
     <Compile Include="Palavra.cs" />
     <Compile Include="PalavraServico.cs" />
+    <Compile Include="Repositorio\IDificuldadeRepositorio.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio\IPalavraRepositorio.cs" />

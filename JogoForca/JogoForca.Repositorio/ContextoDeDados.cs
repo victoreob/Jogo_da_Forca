@@ -1,4 +1,5 @@
-﻿using JogoForca.Dominio.Models;
+﻿using JogoForca.Dominio;
+using JogoForca.Dominio.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -19,6 +20,7 @@ namespace JogoForca.Repositorio
 
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Palavra> Palavra { get; set; }
+        public DbSet<Dificuldade> Dificuldade { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
