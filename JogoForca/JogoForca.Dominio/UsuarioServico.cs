@@ -34,10 +34,8 @@ namespace JogoForca.Dominio
             usuarioRepositorio.Criar(usuario);
         }
 
-        public void AdicionarPontos(Usuario usuario, int pontos)
+        public void AdicionarPontos(Usuario usuario)
         {
-            usuario.Pontuacao += pontos;
-
             usuarioRepositorio.AdicionarPontos(usuario);
         }
 

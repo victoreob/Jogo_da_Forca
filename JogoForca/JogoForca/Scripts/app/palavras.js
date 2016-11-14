@@ -9,25 +9,25 @@
   }
 
   esconderAPalavra(palavra) {
-    let tam = palavra.Nome.length;
+    let tam = palavra.length;
     var palavraEscondida = "";
-    for (let i = 0; i < tam; i++){
+    for (let i = 0; i < tam; i++) {
       palavraEscondida += "_ ";
     }
     return palavraEscondida;
   }
 
-  mostrarLetras(palavra, letra) {
+  mostrarLetras(palavra, palavraComUnderline, letra) {
     let tam = palavra.length;
-    var palavraEscondida = "";
-    let letraPalavra;
-    for (let i = 0; i < tam; i++) {
-      if (palavra[i] == letra)
-        palavraEscondida += letra + " ";
-      else
-        palavraEscondida += "_ ";
+    let arrayDeLetras = palavraComUnderline.split(" ");
+    for (let i = 0; i < arrayDeLetras.length; i++) {
+      if (palavra[i] === letra && arrayDeLetras[i] === "_")
+        arrayDeLetras[i] = letra;
     }
-    return palavraEscondida;
+    let palavraResultado = "";
+    for (let i = 0; i < arrayDeLetras.length; i++) {
+      palavraResultado += arrayDeLetras[i] + " ";
+    }
+    return palavraResultado;
   }
-
 }

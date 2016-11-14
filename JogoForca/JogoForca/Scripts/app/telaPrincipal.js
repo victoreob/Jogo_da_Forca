@@ -28,33 +28,29 @@ class TelaPrincipal {
     let self = this;
     let usuario = window.sessionStorage.getObj('usuario');
     console.log(usuario);
-    let palavras = window.localStorage.getItem(usuario.Nome);
+    let palavras = window.localStorage.getObj(usuario.Nome);
     if (palavras == null) {
       switch (usuario.Dificuldade){
         case 'normal':
           self.palavras.pegarPalavrasNivelNormal()
             .done((res) => {
-              console.log(res);
-              self.palavra = res[0];
-              self.renderizarPalavra(self.palavra);
-              window.localStorage.setItem(usuario, res);
+              self.renderizarPalavra(res[0]);
+              window.localStorage.setObj(usuario.Nome, res.map((p) => p.Nome));
               this.$elem.show();
             });
           break;
         case 'bh':
           self.palavras.pegarRegistrosNivelBh()
             .done((res) => {
-              console.log(res);
-              self.palavra = res[0];
-              self.renderizarPalavra(self.palavra);
-              window.localStorage.setItem(usuario, res);
+              self.renderizarPalavra(res[0]);
+              window.localStorage.setObj(usuario.Nome, res.map((p) => p.Nome));
               this.$elem.show();
             });
           break;
       }
     } else {
-      self.palavra = palavras[0];
-      self.renderizarPalavra(self.palavra);
+      console.log(palavras);
+      self.renderizarPalavra(palavras[0]);
       this.$elem.show();
     }
   }
@@ -67,6 +63,22 @@ class TelaPrincipal {
     this.$formPalpiteLetra = $('#form-palpite-letra');
     this.$btnSubmitLetra = this.$formPalpiteLetra.find('button[type=submit]');
     let self = this;
+
+    this.$formPalpiteLetra.submit((e) => {
+      try {
+        self.$btnSubmitLetra.text('Palpitando...');
+        self.$btnSubmitLetra.attr('disabled', true);
+        let letra = self.$formPalpiteLetra.find('#letra-palpite').val();
+        $('#letra-palpite').val("");
+        self.palpitarLetra(letra);
+        return e.preventDefault();
+      }
+      catch (erro) {
+        console.error('ops, erro:', erro);
+      }
+      
+    });
+
     let validator = this.$formPalpiteLetra.validate({
       highlight: function (element, errorClass, validClass) {
         $(element).closest('.form-group').addClass('has-error');
@@ -83,31 +95,49 @@ class TelaPrincipal {
         this.defaultShowErrors();
       },
       submitHandler: function () {
-        self.$btnSubmitLetra.text('Palpitando...');
-        self.$btnSubmitLetra.attr('disabled', true);
-        let letra = $('#letra-palpite').val();
-        self.palpitarLetra(letra).bind(self);
+        return false;
       }
     });
   }
 
   palpitarLetra(letra) {
-    let palavra = this.palavra.Nome;
+    let self = this;
+    let usuario = window.sessionStorage.getObj('usuario');
+    let palavra = window.localStorage.getObj(usuario.Nome)[0];
+    let palavraComUnderline = $('#palavra').text();
     if (palavra.indexOf(letra) !== -1) {
-      let palavraASerRenderizada = this.palavras.mostrarLetras(palavra, letra);
+      let palavraASerRenderizada = self.palavras.mostrarLetras(palavra, palavraComUnderline, letra);
       if (palavraASerRenderizada.indexOf("_") === -1) {
         let usuario = window.sessionStorage.getObj('usuario');
-        this.usuarios.adicionarPontos(usuario)
+        self.usuarios.adicionarPontos(usuario)
           .done(function (res) {
             window.sessionStorage.setObj('usuario', res);
-            this.renderizarPalavraComPalpite(palavraASerRenderizada);
+            self.$btnSubmitLetra.text('Palpitar!');
+            self.$btnSubmitLetra.attr('disabled', false);
+            self.renderizarPalavraComPalpite(palavraASerRenderizada);
+            $('#letra-palpite').val("");
+            let usuario = window.sessionStorage.getObj('usuario');
+            let palavras = window.localStorage.getObj(usuario.Nome);
+            palavras.splice(0, 1);
+            window.localStorage.setObj(usuario.Nome, palavras);
             $('#winner').show();
+            $('#btn-jogar-novamente')
+              .on('click', () => {
+                jogoDaForca.renderizarTela('principal');
+              });
           });
       } else {
-        this.renderizarPalavraComPalpite(palavraASerRenderizada);
+        self.$btnSubmitLetra.text('Palpitar!');
+        self.$btnSubmitLetra.attr('disabled', false);
+        self.renderizarPalavraComPalpite(palavraASerRenderizada);
+        $('#letra-palpite').val("");
       }
-    } else 
+    } else {
+      self.$btnSubmitLetra.text('Palpitar!');
+      self.$btnSubmitLetra.attr('disabled', false);
       console.log('nao tem a letra');
+      $('#letra-palpite').val("");
+    }
   }
 
   renderizarPalavraComPalpite(palavra) {
@@ -137,7 +167,7 @@ class TelaPrincipal {
         self.$btnSubmitPalavra.text('Palpitando...');
         self.$btnSubmitPalavra.attr('disabled', true);
         let palavra = $('#palavra-palpite').val();
-        self.palpitarPalavra(palavra).bind(self);
+        self.palpitarPalavra(palavra);
       }
     });
   }

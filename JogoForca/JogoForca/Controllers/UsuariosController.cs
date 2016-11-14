@@ -43,8 +43,7 @@ namespace JogoForca.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            usuarioServico.AdicionarPontos(usuario, 1);
-            usuario.Pontuacao++;
+            usuarioServico.AdicionarPontos(usuario);
 
             return Ok(usuario);
         }
@@ -66,7 +65,7 @@ namespace JogoForca.Controllers
 
         // GET: api/usuarios/buscarPorNome
         [HttpGet]
-        [Route("api/usuarios/busarPorNomeENivel")]
+        [Route("api/usuarios/buscarPorNomeENivel")]
         [ResponseType(typeof(Usuario))]
         public IHttpActionResult GetUsuarioPorNomeENivel(string nome, string nivel)
         {
