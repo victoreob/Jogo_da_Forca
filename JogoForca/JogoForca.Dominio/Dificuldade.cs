@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace JogoForca.Dominio
 {
-    class Jogada
+    public class Dificuldade
     {
+
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public int QuantidadeDeErros { get; set; }
+
     }
+
 }
