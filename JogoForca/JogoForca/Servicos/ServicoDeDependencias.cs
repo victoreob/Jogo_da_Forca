@@ -1,4 +1,5 @@
 ﻿using JogoForca.Dominio;
+using JogoForca.Repositorio;
 using JogoForca.Repositorio.Repositorios;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,14 @@ namespace JogoForca.Servicos
             get
             {
                 return new UsuarioServico(new UsuarioRepositorio());
+            }
+        }
+
+        public static DificuldadeServico MontarDificuldadeServico
+        {
+            get
+            {
+                return new DificuldadeServico(new DificuldadeRepositorio());
             }
         }
     }

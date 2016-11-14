@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JogoForca.Dominio.Models
+namespace JogoForca.Dominio
 {
-    public class Usuario
+    public class Dificuldade
     {
 
         public int Id { get; set; }
         public string Nome { get; set; }
-        public int Pontuacao { get; set; }
-        public Dificuldade IdDificuldade{ get; set; }
+        public int QuantidadeDeErros { get; set; }
+
     }
+
 }

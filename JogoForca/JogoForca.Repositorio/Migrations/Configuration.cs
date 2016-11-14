@@ -1,5 +1,6 @@
 namespace JogoForca.Repositorio.Migrations
 {
+    using Dominio;
     using Dominio.Models;
     using System;
     using System.Data.Entity;
@@ -10,7 +11,7 @@ namespace JogoForca.Repositorio.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(JogoForca.Repositorio.ContextoDeDados context)
@@ -81,6 +82,13 @@ namespace JogoForca.Repositorio.Migrations
                 new Palavra { Nome = "Odontologia" },
                 new Palavra { Nome = "Manga" }
             );
+
+            context.Dificuldade.AddOrUpdate(
+                p => p.Nome,
+                new Dificuldade { Nome = "normal", QuantidadeDeErros = 5 },
+                new Dificuldade { Nome = "bh", QuantidadeDeErros = 2 }
+            );
+            
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 

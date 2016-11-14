@@ -24,7 +24,7 @@ namespace JogoForca.Repositorio.Repositorios
         {
             using (var context = new ContextoDeDados())
             {
-                return context.Usuario.FirstOrDefault(u => u.Nome.Equals(nome) && u.Dificuldade.Equals(nivel));
+                return context.Usuario.FirstOrDefault(u => u.Nome.Equals(nome)); //&& u.Dificuldade.Equals(nivel));
             }
         }
 

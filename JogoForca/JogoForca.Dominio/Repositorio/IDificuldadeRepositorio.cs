@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JogoForca.Dominio
+namespace JogoForca.Dominio.Repositorio
 {
-    class Jogada
+    public interface IDificuldadeRepositorio
     {
+
+        string NomeDaDificuldade(int id);
+
     }
 }
