@@ -66,14 +66,14 @@ namespace JogoForca.Controllers
 
         // GET: api/usuarios/buscarPorNome
         [HttpGet]
-        [Route("api/usuarios/busarPorNome")]
+        [Route("api/usuarios/busarPorNomeENivel")]
         [ResponseType(typeof(Usuario))]
-        public IHttpActionResult GetUsuarioPorNome(string nome)
+        public IHttpActionResult GetUsuarioPorNomeENivel(string nome, string nivel)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            Usuario usuarioResposta = usuarioServico.BuscarUsuarioPorNome(nome);
+            Usuario usuarioResposta = usuarioServico.BuscarUsuarioPorNomeENivel(nome, nivel);
 
             if (usuarioResposta == null)
                 return Ok(new Usuario());
