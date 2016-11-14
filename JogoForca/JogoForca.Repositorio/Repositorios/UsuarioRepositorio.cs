@@ -20,11 +20,11 @@ namespace JogoForca.Repositorio.Repositorios
             }
         }
 
-        public Usuario BuscarPorNome(string nome)
+        public Usuario BuscarPorNomeENivel(string nome, string nivel)
         {
             using (var context = new ContextoDeDados())
             {
-                return context.Usuario.FirstOrDefault(u => u.Nome.Contains(nome));
+                return context.Usuario.FirstOrDefault(u => u.Nome.Equals(nome) && u.Dificuldade.Equals(nivel));
             }
         }
 
