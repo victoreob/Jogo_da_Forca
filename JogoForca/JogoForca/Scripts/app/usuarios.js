@@ -1,7 +1,7 @@
 ﻿class Usuarios {
 
   cadastrar(usuario) {
-    return $.post('/api/usuarios/cadastrar', usuario);
+    return $.post('api/Usuarios', usuario);
   }
 
   resetarPontos(usuario) {
@@ -13,7 +13,7 @@
   }
 
   buscarPorNome(usuario) {
-    return $.get('/api/usuarios/buscarPorNome', usuario);
+    return $.get('api/usuarios/busarPorNome', { nome: usuario.nome });
   }
 
   buscarPorId(usuario) {
