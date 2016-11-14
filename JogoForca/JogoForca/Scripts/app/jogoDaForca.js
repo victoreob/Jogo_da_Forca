@@ -4,12 +4,14 @@ jogoDaForca.toggleLoader = () => {
   ['.loader', '.tela'].forEach(seletor => $(seletor).toggle());
 };
 
-jogoDaForca.renderizarTela = function (nome) {
+jogoDaForca.iniciar = function () {
+  return jogoDaForca.renderizarTela('login');
+};
 
+jogoDaForca.renderizarTela = function (nome) {
   // escondendo todas as telas antes de renderizar a tela correta
   let $subTelas = $('.sub-tela');
   $.each($subTelas, (indice, elem) => $(elem).hide());
-  let seletor = '';
 
   switch (nome) {
     case 'principal':
@@ -46,7 +48,3 @@ jogoDaForca.render = function (viewElementSelector, templateName, data) {
    );
   });
 }
-
-jogoDaForca.iniciar = function () {
-  return jogoDaForca.renderizarTela('login');
-};
