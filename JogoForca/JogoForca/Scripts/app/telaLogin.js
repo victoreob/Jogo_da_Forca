@@ -6,6 +6,12 @@ class TelaLogin {
     this.registrarBindsEventos();
     this.renderizarEstadoInicial();
   }
+
+  renderizarEstadoInicial() {
+    this.$elem.show();
+    this.$btnSubmit.attr('disabled', !this.$formLogin.valid());
+  }
+
   registrarBindsEventos() {
     this.$formLogin = $('#formLogin');
     this.$btnSubmit = this.$formLogin.find('button[type=submit]');
@@ -26,11 +32,11 @@ class TelaLogin {
         this.defaultShowErrors();
       },
       submitHandler: function () {
+        let $usuario = $('#usuario').val();
+        let $dificuldade = $('input[type="radio"][name="dificuldade"]:checked', this.$formLogin).val();
+        self.salvarUsuarioNaSessao($usuario, $dificuldade);
         self.$btnSubmit.text('Carregando...');
         self.$btnSubmit.attr('disabled', true);
-        let usuario = $('#usuario').val();
-        let dificuldade = $('#dificuldade').val();
-        self.salvarUsuarioNaSessao(usuario, dificuldade).bind(self);
         setTimeout(function () {
           jogoDaForca.renderizarTela('principal');
         }, 2000);
@@ -38,23 +44,29 @@ class TelaLogin {
     });
   }
 
-  
-
   salvarUsuarioNaSessao(usuario, dificuldade) {
     let usuarioASerSalvo = {
       nome: usuario,
       pontuacao: 0,
       dificuldade: dificuldade
     };
-    this.usuarios.cadastrar(usuario).done((res) => {
-      console.log('res', res);
-      //window.sessionStorage.setItem('usuario', res);
-    });
+    let self = this;
+    this.usuarios.buscarPorNome(usuarioASerSalvo)
+      .done(function (res) {
+        if (res.Id === 0) {
+          self.usuarios.cadastrar(usuarioASerSalvo)
+            .done(function (res) {
+              console.log('res', res);
+              window.sessionStorage.setItem('usuario', res);
+          });
+        } else {
+          console.log('res', res);
+          window.sessionStorage.setItem('usuario', res);
+        }
+      });
+
   }
 
-  renderizarEstadoInicial() {
-    this.$elem.show();
-    this.$btnSubmit.attr('disabled', !this.$formLogin.valid());
-  }
+  
 
 }
