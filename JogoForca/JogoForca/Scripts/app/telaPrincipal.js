@@ -2,7 +2,10 @@ class TelaPrincipal {
   
   constructor(seletor) {
     this.$elem = $(seletor);
+    $('#game-over').hide();
+    $('#winner').hide();
     this.palavras = new Palavras();
+    this.usuarios = new Usuarios();
     this.registrarBindsEventos();
     this.renderizarEstadoInicial();
   }
@@ -15,7 +18,6 @@ class TelaPrincipal {
   renderizarEstadoInicial() {
     $('section.tela-centralizada').removeClass('tela-centralizada');
     this.pegarPalavras();
-    this.$elem.show();
   }
 
   renderizarPalavra(palavra) {
@@ -24,17 +26,19 @@ class TelaPrincipal {
 
   pegarPalavras() {
     let self = this;
-    let usuario = window.sessionStorage.getItem('usuario');
-    let palavras = window.localStorage.getItem(usuario);
+    let usuario = window.sessionStorage.getObj('usuario');
+    console.log(usuario);
+    let palavras = window.localStorage.getItem(usuario.Nome);
     if (palavras == null) {
-      switch (usuario.dificuldade){
+      switch (usuario.Dificuldade){
         case 'normal':
           self.palavras.pegarPalavrasNivelNormal()
             .done((res) => {
               console.log(res);
               self.palavra = res[0];
-              renderizarPalavra(self.palavra);
+              self.renderizarPalavra(self.palavra);
               window.localStorage.setItem(usuario, res);
+              this.$elem.show();
             });
           break;
         case 'bh':
@@ -42,14 +46,16 @@ class TelaPrincipal {
             .done((res) => {
               console.log(res);
               self.palavra = res[0];
-              renderizarPalavra(self.palavra);
+              self.renderizarPalavra(self.palavra);
               window.localStorage.setItem(usuario, res);
+              this.$elem.show();
             });
           break;
       }
     } else {
       self.palavra = palavras[0];
       self.renderizarPalavra(self.palavra);
+      this.$elem.show();
     }
   }
 
@@ -85,6 +91,29 @@ class TelaPrincipal {
     });
   }
 
+  palpitarLetra(letra) {
+    let palavra = this.palavra.Nome;
+    if (palavra.indexOf(letra) !== -1) {
+      let palavraASerRenderizada = this.palavras.mostrarLetras(palavra, letra);
+      if (palavraASerRenderizada.indexOf("_") === -1) {
+        let usuario = window.sessionStorage.getObj('usuario');
+        this.usuarios.adicionarPontos(usuario)
+          .done(function (res) {
+            window.sessionStorage.setObj('usuario', res);
+            this.renderizarPalavraComPalpite(palavraASerRenderizada);
+            $('#winner').show();
+          });
+      } else {
+        this.renderizarPalavraComPalpite(palavraASerRenderizada);
+      }
+    } else 
+      console.log('nao tem a letra');
+  }
+
+  renderizarPalavraComPalpite(palavra) {
+    $('#palavra').text(palavra);
+  }
+
   validarPalavraFormulario() {
     this.$formPalpitePalavra = $('#form-palpite-palavra');
     this.$btnSubmitPalavra = this.$formPalpitePalavra.find('button[type=submit]');
@@ -111,5 +140,16 @@ class TelaPrincipal {
         self.palpitarPalavra(palavra).bind(self);
       }
     });
+  }
+
+  palpitarPalavra(palavra) {
+    if (palavra === this.palavra) {
+      this.renderizarPalavra(this.palavra);
+      let usuario = window.sessionStorage.getItem('usuario');
+      this.usuarios.adicionarPontos(usuario)
+        .done(function (res) {
+          $('#winner').show();
+        });
+    }
   }
 }

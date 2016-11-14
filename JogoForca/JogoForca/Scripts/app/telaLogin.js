@@ -37,9 +37,6 @@ class TelaLogin {
         self.salvarUsuarioNaSessao($usuario, $dificuldade);
         self.$btnSubmit.text('Carregando...');
         self.$btnSubmit.attr('disabled', true);
-        setTimeout(function () {
-          jogoDaForca.renderizarTela('principal');
-        }, 2000);
       }
     });
   }
@@ -51,22 +48,24 @@ class TelaLogin {
       dificuldade: dificuldade
     };
     let self = this;
-    this.usuarios.buscarPorNome(usuarioASerSalvo)
+    this.usuarios.buscarPorNomeENivel(usuarioASerSalvo)
       .done(function (res) {
         if (res.Id === 0) {
           self.usuarios.cadastrar(usuarioASerSalvo)
             .done(function (res) {
               console.log('res', res);
-              window.sessionStorage.setItem('usuario', res);
-          });
+              window.sessionStorage.setObj('usuario', res);
+              setTimeout(function () {
+                jogoDaForca.renderizarTela('principal');
+              }, 2000);
+            });
         } else {
           console.log('res', res);
-          window.sessionStorage.setItem('usuario', res);
+          window.sessionStorage.setObj('usuario', res);
+          setTimeout(function () {
+            jogoDaForca.renderizarTela('principal');
+          }, 2000);
         }
       });
-
   }
-
-  
-
 }

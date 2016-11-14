@@ -12,8 +12,8 @@
     return $.put('api/usuarios/adicionarPontos', usuario);
   }
 
-  buscarPorNome(usuario) {
-    return $.get('api/usuarios/busarPorNome', { nome: usuario.nome });
+  buscarPorNomeENivel(usuario) {
+    return $.get('api/usuarios/busarPorNomeENivel', { nome: usuario.nome, nivel: usuario.dificuldade });
   }
 
   buscarPorId(usuario) {
