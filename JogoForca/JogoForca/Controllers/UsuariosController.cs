@@ -43,8 +43,7 @@ namespace JogoForca.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            usuarioServico.AdicionarPontos(usuario, 1);
-            usuario.Pontuacao++;
+            usuarioServico.AdicionarPontos(usuario);
 
             return Ok(usuario);
         }

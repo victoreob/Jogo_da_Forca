@@ -9,7 +9,13 @@
   }
 
   adicionarPontos(usuario) {
-    return $.put('api/usuarios/adicionarPontos', usuario);
+    // incrementando pontuação.
+    usuario.Pontuacao++;
+    return $.ajax({
+      url: 'api/usuarios/adicionarPontos',
+      type: 'PUT',
+      data: usuario
+    });
   }
 
   buscarPorNomeENivel(usuario) {
