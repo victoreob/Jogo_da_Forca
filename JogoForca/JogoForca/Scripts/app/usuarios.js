@@ -19,7 +19,7 @@
   }
 
   buscarPorNomeENivel(usuario) {
-    return $.get('api/usuarios/busarPorNomeENivel', { nome: usuario.nome, nivel: usuario.dificuldade });
+    return $.get('api/usuarios/buscarPorNomeENivel', { nome: usuario.nome, nivel: usuario.dificuldade });
   }
 
   buscarPorId(usuario) {

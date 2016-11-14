@@ -65,7 +65,7 @@ namespace JogoForca.Controllers
 
         // GET: api/usuarios/buscarPorNome
         [HttpGet]
-        [Route("api/usuarios/busarPorNomeENivel")]
+        [Route("api/usuarios/buscarPorNomeENivel")]
         [ResponseType(typeof(Usuario))]
         public IHttpActionResult GetUsuarioPorNomeENivel(string nome, string nivel)
         {

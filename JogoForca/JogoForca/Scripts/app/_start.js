@@ -5,5 +5,6 @@
   Storage.prototype.getObj = function (key) {
     return JSON.parse(this.getItem(key));
   };
+
   jogoDaForca.iniciar();
 });

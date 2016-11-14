@@ -9,7 +9,7 @@
   }
 
   esconderAPalavra(palavra) {
-    let tam = palavra.Nome.length;
+    let tam = palavra.length;
     var palavraEscondida = "";
     for (let i = 0; i < tam; i++) {
       palavraEscondida += "_ ";
