@@ -53,16 +53,6 @@ label {
   color:#8E0000;
 }
 
-.thumbnail {
-  height: 200px;
-  width: 200px;
-}
-
-.capa-comic {
-  height: 230px;
-  width: 195px;
-}
-
 #container-botao-entrar {
   padding-left: 0;
   margin-left: 114px;
@@ -75,3 +65,79 @@ label {
 .nome-item {
   color: azure;
 }
+
+#container-botao-palavra {
+  padding-left: 0;
+  margin-left: 114px;
+}
+
+#titulo-pagina-principal {
+    color: #4A92E0;
+    font-family: helvetica,fantasy, arial;
+    text-align: center;
+    font-size: 50px;
+}
+
+btn-sortear-palavra {
+    background-color: #2B4162;
+    color: #C0E0DE;
+    margin: 30px;
+    padding: 10px;
+}
+
+titulo palpite {
+    color: #4A92E0;
+    font-family: fantasy;
+    font-size: 30px;
+}
+
+#form-palpite-palavra {
+    margin-top: 50px;
+    margin-left: 35px;
+}
+
+#btn-palpitar {
+    background-color: #4A92E0;
+    color: #2B4162;
+}
+#palavra{
+    border: solid;
+    height: 66px;
+    width: 267px;
+    background-color: #119E9D;
+    display: inline-block;
+}
+.row{
+    float: left;
+    margin-left: 120px;
+    margin-top: 50px;
+
+}
+
+#game-over{
+    background-color:#2B4162;
+    color:#8E0000;
+    font-family: fantasy;
+    text-align:center;
+}
+#btn-tentar-novamente{
+    background-color:#8E0000;
+    color:#2B4162;
+
+}
+
+#winner{
+    background-color: #119E9D;
+    color:#16658d;
+}
+
+#btn-jogar-novamente{
+    background-color:#16658d;
+    color:#119E9D;
+    font-family: fantasy;
+    text-align:center;
+}
+
+
+
+
