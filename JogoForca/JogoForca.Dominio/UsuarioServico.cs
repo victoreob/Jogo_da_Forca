@@ -19,9 +19,9 @@ namespace JogoForca.Dominio
         }
 
 
-        public Usuario BuscarUsuarioPorNome(string nomeUsuario)
+        public Usuario BuscarUsuarioPorNomeENivel(string nomeUsuario, string nivel)
         {
-            return usuarioRepositorio.BuscarPorNome(nomeUsuario);
+            return usuarioRepositorio.BuscarPorNomeENivel(nomeUsuario, nivel);
         }
 
         public Usuario BuscarUsuarioPorId(int id)
