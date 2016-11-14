@@ -10,7 +10,7 @@ namespace JogoForca.Dominio.Repositorio
     public interface IUsuarioRepositorio
     {
         IList<Usuario> Ranking();
-        Usuario BuscarPorNome(string nome);
+        Usuario BuscarPorNomeENivel(string nome, string nivel);
         Usuario BuscarPorId(int id);
         void Criar(Usuario usuario);
         void AdicionarPontos(Usuario usuario);
