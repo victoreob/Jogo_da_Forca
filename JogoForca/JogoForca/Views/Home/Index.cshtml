@@ -9,7 +9,7 @@
                 <input type="text" id="usuario" name="usuario" class="form-control has-error" required>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" required>
             <label for="dificuldade" class="col-md-3">Nivel de dificuldade</label>
             <div class="col-md-9">
                 <label class="radio-inline"><input type="radio" name="dificuldade" value="normal">Normal</label>
@@ -23,7 +23,56 @@
         </div>
     </form>
 </div>
+
 <div id="telaPrincipal" class="sub-tela">
+    <div class="row">
+        <h2 class="titulo">Bem vindo ao Jogo da Forca!</h2>
+    </div>
+    <div class="row">
+        <h2 id="palavra"></h2>
+        <form id="form-palpite-letra" class="form-horizontal">
+            <div class="form-group">
+                <label for="letra-palpite" class="col-md-3">Palpite uma letra</label>
+                <div class="col-md-9">
+                    <input type="text" id="letra-palpite" name="letra-palpite" class="form-control" maxlength="1" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-3 pull-right">
+                    <button type="submit" id="btn-letra" class="btn btn-primary">Palpitar!</button>
+                </div>
+            </div>
+        </form>
+        <form id="form-palpite-palavra" class="form-horizontal">
+            <div class="form-group">
+                <label for="palavra-palpite" class="col-md-3">Palpite a Palavra</label>
+                <div class="col-md-9">
+                    <input type="text" id="palavra-palpite" name="palavra-palpite" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-3 pull-right">
+                    <button type="submit" id="btn-palavra-palpite" class="btn btn-primary">Palpitar!</button>
+                </div>
+            </div>
+        </form>
+        <ul id="letras-erradas"></ul>
+    </div>
+
+    <div id="game-over">
+        <h1> GAME OVER ! </h1>
+        <button type="submit" id="btn-tentar-novamente" class="btn btn-primary">Tente Novamente!</button>
+    </div>
+
+    <div id="winner">
+        <h1>
+            Parab�ns !
+        </h1>
+        <h2>
+            Voc� VENCEU !!
+        </h2>
+        <button type="submit" id="btn-jogar-novamente" class="btn btn-primary">Jogar Novamente!</button>
+    </div>
 </div>
 @section Scripts{
     @Scripts.Render("~/bundles/app")
