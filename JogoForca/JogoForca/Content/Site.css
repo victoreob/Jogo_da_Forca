@@ -50,7 +50,7 @@ label {
 }
 
 .error {
-  color:#8E0000;
+  color:aliceblue;
 }
 
 #container-botao-entrar {
@@ -66,11 +66,6 @@ label {
   color: azure;
 }
 
-#container-botao-palavra {
-  padding-left: 0;
-  margin-left: 114px;
-}
-
 #titulo-pagina-principal {
     color: #4A92E0;
     font-family: helvetica,fantasy, arial;
@@ -78,11 +73,16 @@ label {
     font-size: 50px;
 }
 
+
 #btn-sortear-palavra {
-    background-color: #2B4162;
+    background-color: #1E6B91;
     color: #C0E0DE;
     margin: 30px;
-    padding: 10px;
+    padding: 20px;
+}
+
+#palavra{
+    text-align:center;
 }
 
 #titulo-palpite {
@@ -91,24 +91,67 @@ label {
     font-size: 30px;
 }
 
+#div-palpite-letra{
+    display:inline;
+    /*float:left;*/
+}
+
+#div-palpite-palavra{
+    display:inline;
+    float:left; 
+}
+
+
 #form-palpite-palavra {
-    width: 118px;
+    width: 218px;
     margin-top: 50px;
    
 }
+#letra-palpite{
+    width:110px;
+}
 
-#form-palpite-palavra {
+#palpite-palavra {
     width: 318px;
     margin-top: 50px;
    
 }
 
+
+#form-palpite-letra {
+   margin-left:auto;
+    margin-top: 100px;
+    display:inline;
+}
+
+
+#form-palpite-palavra {
+    display:inline;
+}
+
+#palavra-palpite{
+    width: 150px;
+    
+}
+
+ .titulo-jogo{
+     text-align: center;
+     font-size:60px;
+     font-family: fantasy;
+     color:rgb(74,146,224);
+ }
+
+ .form-acertos{
+     background-color:white;
+ }
+
 #palavra{
     border: solid;
     height: 66px;
-    width: 267px;
-    background-color: #119E9D;
+    width: 420px;
+    background-color: #1E6B91;
     display: inline-block;
+    margin:auto;
 }
 
 #game-over{
