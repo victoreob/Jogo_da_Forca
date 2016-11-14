@@ -22,21 +22,20 @@ namespace JogoForca.Controllers
         private UsuarioServico usuarioServico = ServicoDeDependencias.MontarUsuarioServico;
 
         // POST: api/usuarios/cadastrar
-        [Route("api/usuarios/cadastrar")]
+        //[Route("api/usuarios/cadastrar")]
         [ResponseType(typeof(Usuario))]
-        public IHttpActionResult PostCadastrarUsuario(Usuario usuario)
+        public IHttpActionResult PostUsuarios(Usuario usuario)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             usuarioServico.CriarUsuario(usuario);
 
-            Usuario usuarioCriado = usuarioServico.BuscarUsuarioPorNome(usuario.Nome);
-
-            return CreatedAtRoute("DefaultApi", new { id = usuarioCriado.Id }, usuarioCriado);
+            return CreatedAtRoute("DefaultApi", new { id = usuario.Id }, usuario);
         }
 
         // PUT: api//usuarios/adicionarPontos
+        [HttpPut]
         [Route("api/usuarios/adicionarPontos")]
         [ResponseType(typeof(Usuario))]
         public IHttpActionResult PutAdicionarPontos(Usuario usuario)
@@ -51,6 +50,7 @@ namespace JogoForca.Controllers
         }
 
         // PUT: api/usuarios/resetarPontos
+        [HttpPut]
         [Route("api/usuarios/resetarPontos")]
         [ResponseType(typeof(Usuario))]
         public IHttpActionResult PutResetarPontos(Usuario usuario)
@@ -65,22 +65,24 @@ namespace JogoForca.Controllers
         }
 
         // GET: api/usuarios/buscarPorNome
+        [HttpGet]
         [Route("api/usuarios/busarPorNome")]
         [ResponseType(typeof(Usuario))]
-        public IHttpActionResult GetUsuarioPorNome(Usuario usuario)
+        public IHttpActionResult GetUsuarioPorNome(string nome)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            Usuario usuarioResposta = usuarioServico.BuscarUsuarioPorNome(usuario.Nome);
+            Usuario usuarioResposta = usuarioServico.BuscarUsuarioPorNome(nome);
 
             if (usuarioResposta == null)
-                return NotFound();
+                return Ok(new Usuario());
 
             return Ok(usuarioResposta);  
         }
 
         // GET: api/usuarios/buscarPorId
+        [HttpGet]
         [Route("api/usuarios/busarPorId")]
         [ResponseType(typeof(Usuario))]
         public IHttpActionResult GetUsuarioPorId(Usuario usuario)
@@ -98,6 +100,7 @@ namespace JogoForca.Controllers
 
 
         //GET: api/usuarios/ranking
+        [HttpGet]
         [Route("api/usuarios/buscarRanking")]
         [ResponseType(typeof(IList<Usuario>))]
         public IHttpActionResult GetRanking()
