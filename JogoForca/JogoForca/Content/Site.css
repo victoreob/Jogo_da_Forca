@@ -81,9 +81,6 @@ label {
     padding: 20px;
 }
 
-#palavra{
-    text-align:center;
-}
 
 #titulo-palpite {
     color: #4A92E0;
@@ -141,17 +138,55 @@ label {
      color:rgb(74,146,224);
  }
 
- .form-acertos{
+ #acertos{
+     text-align:center;
+     margin-left:30%;
+     padding:10px;
+     width:100px;
+     height:80px;
+     position:absolute;
+     float:left;
      background-color:white;
+     border:solid #b50202;
+     color:#b50202;
+}
+
+ #pontuacao-acertos{
+     font-size:25px;
+     text-align:center;
  }
 
+ #pontuacao-erros{
+     font-size:25px;
+     text-align:center;
+ }
+
+ #erros{
+     text-align:center;
+     margin-left:50%;
+     padding:10px;
+     width:100px;
+     height:80px;
+     background-color:white;
+     border:solid green;
+     color:green;
+     
+     
+ }
+
+
+
 #palavra{
+    
     border: solid;
     height: 66px;
     width: 420px;
     background-color: #1E6B91;
     display: inline-block;
-    margin:auto;
+    margin-left:30px;
+    text-align:center;
+    padding-top:10px;
+
 }
 
 #game-over{
@@ -168,6 +203,7 @@ label {
 
 #winner{
     /*background-color: #119E9D;*/
+    height:400px;
     color:#FFF;
     text-align:center;
     font-size:460px;
