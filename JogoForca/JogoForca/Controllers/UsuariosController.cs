@@ -98,21 +98,39 @@ namespace JogoForca.Controllers
         }
 
 
-        //GET: api/usuarios/ranking
-        [HttpGet]
-        [Route("api/usuarios/buscarRanking")]
-        [ResponseType(typeof(IList<Usuario>))]
-        public IHttpActionResult GetRanking()
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+        ////GET: api/usuarios/ranking
+        //[HttpGet]
+        //[Route("api/usuarios/buscarRanking")]
+        //[ResponseType(typeof(IList<Usuario>))]
+        //public IHttpActionResult GetRanking()
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
 
-            IList<Usuario> usuarios = usuarioServico.CriarRanqueamento();
+        //    IList<Usuario> usuarios = usuarioServico.CriarRanqueamento();
             
-            if (usuarios == null)
-                return NotFound();
+        //    if (usuarios == null)
+        //        return NotFound();
 
-            return Ok(usuarios);
+        //    return Ok(usuarios);
+        //}
+
+
+        // GET: api/Usuario
+        public IHttpActionResult GetUsuario(int pagina = 1, int tamanhoPagina = 5)
+        {
+            //pagina = pagina ?? 1;
+            //tamanhoPagina = tamanhoPagina ?? 5;
+            // simulando lentidão
+            System.Threading.Thread.Sleep(1500);
+
+            var registros = usuarioServico.CriarRanqueamento(pagina, tamanhoPagina);
+
+            return Ok(new
+            {
+                total = usuarioServico.ContarRegistros(),
+                dados = registros
+            });
         }
     }
 }

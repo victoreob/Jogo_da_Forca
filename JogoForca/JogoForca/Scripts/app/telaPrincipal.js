@@ -169,15 +169,37 @@ class TelaPrincipal {
     });
   }
 
-  palpitarPalavra(palavra) {
-    if (palavra === this.palavra) {
-      this.renderizarPalavra(this.palavra);
-      let usuario = window.sessionStorage.getItem('usuario');
-      this.usuarios.adicionarPontos(usuario)
-        .done(function (res) {
-          $('#winner').show();
-        });
+  palpitarPalavra(palavraPalpitada) {
+    let self = this;
+    let usuario = window.sessionStorage.getObj('usuario');
+    let palavra = window.localStorage.getObj(usuario.Nome)[0];
+
+    if (palavraPalpitada === palavra) {
+        console.log("Funcionou!");
+        self.usuarios.adicionarPontos(usuario)
+          .done(function (res) {
+              $('#palavra-palpite').val("");
+              let usuarioNovo = window.sessionStorage.getObj('usuario');
+              let palavras = window.localStorage.getObj(usuarioNovo.Nome);
+              palavras.splice(0, 1);
+              window.localStorage.setObj(usuarioNovo.Nome, palavras);
+              self.acertouPalavra();
+          });
+    } else {
+        self.errouPalavra();
     }
+  }
+
+  errouPalavra() {
+      $('#game-over').show();
+      $('#div-palpite-palavra').hide();
+      $('#div-palpite-letra').hide();
+      $('#btn-tentar-novamente')
+        .on('click', () => {
+            jogoDaForca.renderizarTela('login');
+            $('#div-palpite-palavra').show();
+            $('#div-palpite-letra').show();
+        });
   }
 
   acertouPalavra() {

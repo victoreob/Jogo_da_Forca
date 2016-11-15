@@ -47,9 +47,14 @@ namespace JogoForca.Dominio
             usuarioRepositorio.ResetarPontos(usuario);
         }
 
-        public IList<Usuario> CriarRanqueamento()
+        public IEnumerable<Usuario> CriarRanqueamento(int pagina, int tamanhoPagina)
         {
-            return usuarioRepositorio.Ranking();
+            return usuarioRepositorio.Ranking(pagina, tamanhoPagina);
+        }
+
+        public int ContarRegistros()
+        {
+            return usuarioRepositorio.ContarRegristros();
         }
 
     }
