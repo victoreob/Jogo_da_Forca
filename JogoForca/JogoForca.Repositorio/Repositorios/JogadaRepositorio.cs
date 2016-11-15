@@ -30,6 +30,14 @@ namespace JogoForca.Repositorio
             }
         }
 
+        public int ContarRegristros()
+        {
+            using (var context = new ContextoDeDados())
+            {
+                return context.Jogada.Count();
+            }
+        }
+
         public void Criar(Jogada jogada)
         {
             using (var context = new ContextoDeDados())
@@ -40,6 +48,24 @@ namespace JogoForca.Repositorio
                     context.Entry<Usuario>(jogada.Usuario).State = EntityState.Unchanged;
 
                 context.SaveChanges();
+            }
+        }
+
+        public IEnumerable<Jogada> Ranking(int pagina, int tamanhoPagina)
+        {
+
+            // tamanhoPagina = 1
+            // Skip(1) = 5*(0) = 0
+            // Skip(2) = 5*(2-1) = 5
+            // Skip(3) = 5*(3-1) = 10
+
+            using (var context = new ContextoDeDados())
+            {
+                return context.Jogada
+                    .OrderBy(_ => _.Pontos)
+                    .Skip(tamanhoPagina * (pagina - 1))
+                    .Take(tamanhoPagina)
+                    .ToArray();
             }
         }
     }
