@@ -8,10 +8,9 @@ namespace JogoForca.Dominio.Models
 {
     public class Usuario
     {
-
         public int Id { get; set; }
         public string Nome { get; set; }
         public int Pontuacao { get; set; }
-        public Dificuldade IdDificuldade{ get; set; }
+        public string Dificuldade{ get; set; }
     }
 }

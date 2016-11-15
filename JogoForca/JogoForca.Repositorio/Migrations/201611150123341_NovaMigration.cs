@@ -3,11 +3,19 @@ namespace JogoForca.Repositorio.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AdicionarTabelaDificuldade : DbMigration
+    public partial class NovaMigration : DbMigration
     {
         public override void Up()
         {
-            RenameTable(name: "dbo.Palavras", newName: "Palavra");
+            DropForeignKey("dbo.Usuario", "IdDificuldade_Id", "dbo.Dificuldade");
+            DropIndex("dbo.Usuario", new[] { "IdDificuldade_Id" });
+            AddColumn("dbo.Usuario", "Dificuldade", c => c.String());
+            DropColumn("dbo.Usuario", "IdDificuldade_Id");
+            DropTable("dbo.Dificuldade");
+        }
+        
+        public override void Down()
+        {
             CreateTable(
                 "dbo.Dificuldade",
                 c => new
@@ -19,19 +27,9 @@ namespace JogoForca.Repositorio.Migrations
                 .PrimaryKey(t => t.Id);
             
             AddColumn("dbo.Usuario", "IdDificuldade_Id", c => c.Int());
+            DropColumn("dbo.Usuario", "Dificuldade");
             CreateIndex("dbo.Usuario", "IdDificuldade_Id");
             AddForeignKey("dbo.Usuario", "IdDificuldade_Id", "dbo.Dificuldade", "Id");
-            DropColumn("dbo.Usuario", "Dificuldade");
-        }
-        
-        public override void Down()
-        {
-            AddColumn("dbo.Usuario", "Dificuldade", c => c.String());
-            DropForeignKey("dbo.Usuario", "IdDificuldade_Id", "dbo.Dificuldade");
-            DropIndex("dbo.Usuario", new[] { "IdDificuldade_Id" });
-            DropColumn("dbo.Usuario", "IdDificuldade_Id");
-            DropTable("dbo.Dificuldade");
-            RenameTable(name: "dbo.Palavra", newName: "Palavras");
         }
     }
 }
