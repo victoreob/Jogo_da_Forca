@@ -29,67 +29,71 @@
         <div class="row">
             <h2 class="titulo-jogo">Bem vindo ao Jogo da Forca!</h2>
         </div>
-       <!-- <div id="pontuacao">  </div>  -->
-        <div id="acertos">ACERTOS
-            <h4 id="pontuacao-acertos"> 0 </h4> 
+        <!-- <div id="pontuacao">  </div>  -->
+        <div id="acertos">
+            ACERTOS
+            <h4 id="pontuacao-acertos"> 0 </h4>
         </div>
-        <div id="erros"> ERROS
+        <div id="erros">
+            ERROS
             <h4 id="pontuacao-erros"> 0 </h4>
-         </div>
+        </div>
 
-
-      
         <div class="row">
             <h2 id="palavra"></h2>
-            <div id="div-palpite-letra">
-                <form id="form-palpite-letra" class="form-horizontal">
-                    <div class="form-group">
-                        <label for="letra-palpite" class="col-md-7">Palpite uma letra</label>
-                        <div class="col-md-7">
-                            <input type="text" id="letra-palpite" name="letra-palpite" class="form-control" maxlength="1" required>
+            <button type="submit" id="resetar-jogo" class="btn btn-primary">Resetar o Jogo</button>
+            <div id="div-letra">
+                <div id="div-palpite-letra">
+                    <form id="form-palpite-letra" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="letra-palpite" class="col-md-7">Palpite uma letra</label>
+                            <div class="col-md-7">
+                                <input type="text" id="letra-palpite" name="letra-palpite" class="form-control" maxlength="1" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-7">
-                            <button type="submit" id="btn-letra" class="btn btn-primary">Palpitar!</button>
+                        <div class="form-group">
+                            <div class="col-md-7">
+                                <button type="submit" id="btn-letra" class="btn btn-primary">Palpitar!</button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-
-            <div id="div-palpite-palavra">
-                <form id="form-palpite-palavra" class="form-horizontal">
-                    <div class="form-group">
-                        <label for="palavra-palpite" class="col-md-7">Palpite a Palavra</label>
-                        <div class="col-md-7">
-                            <input type="text" id="palavra-palpite" name="palavra-palpite" class="form-control" required>
+            <div id="div-palavra">
+                <div id="div-palpite-palavra">
+                    <form id="form-palpite-palavra" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="palavra-palpite" class="col-md-7">Palpite a Palavra</label>
+                            <div class="col-md-7">
+                                <input type="text" id="palavra-palpite" name="palavra-palpite" class="form-control" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-7">
-                            <button type="submit" id="btn-palavra" class="btn btn-primary">Palpitar!</button>
+                        <div class="form-group">
+                            <div class="col-md-7">
+                                <button type="submit" id="btn-palavra" class="btn btn-primary">Palpitar!</button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-
             <ul id="letras-erradas"></ul>
         </div>
     </div>
-        <!--
-    <div id="game-over">
-        <h1> GAME OVER ! </h1>
-        <button type="submit" id="btn-tentar-novamente" class="btn btn-primary">Tente Novamente!</button>
-    </div>
-  -->    
+
+    <!--
+      <div id="game-over">
+          <h1> GAME OVER ! </h1>
+          <button type="submit" id="btn-tentar-novamente" class="btn btn-primary">Tente Novamente!</button>
+      </div>
+    -->
     <div id="winner">
-        <h1>
+        <h2>
             Parabéns !
-        </h1>
+        </h2>
         <h2>
             Você VENCEU !!
         </h2>
-        <button id="btn-jogar-novamente" class="btn btn-primary">Jogar Novamente!</button>
+        <button id="btn-jogar-novamente" class="btn btn-primary">Jogar Novamente</button>
     </div>
 </div>
 @section Scripts{

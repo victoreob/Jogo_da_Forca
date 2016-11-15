@@ -82,6 +82,10 @@ label {
 }
 
 
+#resetar-jogo{
+    margin-left:50px;
+}
+
 #titulo-palpite {
     color: #4A92E0;
     font-family: fantasy;
@@ -131,7 +135,7 @@ label {
     
 }
 
- .titulo-jogo{
+.titulo-jogo{
      text-align: center;
      font-size:60px;
      font-family: fantasy;
@@ -150,6 +154,11 @@ label {
      border:solid #b50202;
      color:#b50202;
 }
+
+ img{
+     height:50px;
+     width:30px;
+ }
 
  #pontuacao-acertos{
      font-size:25px;
@@ -170,53 +179,46 @@ label {
      background-color:white;
      border:solid green;
      color:green;
-     
-     
  }
 
 
 
 #palavra{
-    
     border: solid;
     height: 66px;
     width: 420px;
     background-color: #1E6B91;
     display: inline-block;
-    margin-left:30px;
+    margin-top:30px;
+    margin-left:30%;
     text-align:center;
     padding-top:10px;
 
 }
 
-#game-over{
-    background-color:#2B4162;
+#game-over h1{
+    background-color:#960000;
     color:#8E0000;
-    font-family: fantasy;
+    font-family: 'Franklin Gothic',fantasy, arial;
     text-align:center;
 }
-#btn-tentar-novamente{
-    background-color:#8E0000;
-    color:#2B4162;
 
-}
-
-#winner{
-    /*background-color: #119E9D;*/
-    height:400px;
-    color:#FFF;
+#winner h2{
+    color:#009632;
     text-align:center;
-    font-size:460px;
-    font-family:fantasy;
-
-
+    font-size:60px;
+    height:100px;
+    font-family:'Franklin Gothic', fantasy, arial;
 }
+
 
 #btn-jogar-novamente{
-    background-color:#16658d;
-    color:#119E9D;
-    font-family: fantasy;
+    margin-left:45%;
+    background-color:rgb(74,146,224);
+    color:#16658d;
+    font-family:'Franklin Gothic', fantasy, arial;
     text-align:center;
+    margin-bottom:40px;
 }
 
 
