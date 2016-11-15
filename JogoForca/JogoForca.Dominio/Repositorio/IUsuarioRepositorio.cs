@@ -9,11 +9,12 @@ namespace JogoForca.Dominio.Repositorio
 {
     public interface IUsuarioRepositorio
     {
-        IList<Usuario> Ranking();
+        IEnumerable<Usuario> Ranking(int pagina, int tamanhoPagina);
         Usuario BuscarPorNomeENivel(string nome, string nivel);
         Usuario BuscarPorId(int id);
         void Criar(Usuario usuario);
         void AdicionarPontos(Usuario usuario);
         void ResetarPontos(Usuario usuario);
+        int ContarRegristros();
     }
 }

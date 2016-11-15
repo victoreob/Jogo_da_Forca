@@ -11,6 +11,15 @@ namespace JogoForca.Repositorio.Repositorios
 {
     public class UsuarioRepositorio : IUsuarioRepositorio
     {
+
+        public int ContarRegistros()
+        {
+            using (var context = new ContextoDeDados())
+            {
+                return context.Usuario.Count();
+            }
+        }
+
         public void AdicionarPontos(Usuario usuario)
         {
             using (var context = new ContextoDeDados())
@@ -50,13 +59,21 @@ namespace JogoForca.Repositorio.Repositorios
 
         }
 
-        public IList<Usuario> Ranking()
+        public IEnumerable<Usuario> Ranking(int pagina, int tamanhoPagina)
         {
+
+            // tamanhoPagina = 1
+            // Skip(1) = 5*(0) = 0
+            // Skip(2) = 5*(2-1) = 5
+            // Skip(3) = 5*(3-1) = 10
+
             using (var context = new ContextoDeDados())
             {
-                IList<Usuario> usuariosOrdenados;
-                usuariosOrdenados = context.Usuario.OrderBy(u => u.Pontuacao).ToArray();
-                return usuariosOrdenados;
+                return context.Usuario
+                    .OrderBy(_ => _.Pontuacao)
+                    .Skip(tamanhoPagina * (pagina - 1))
+                    .Take(tamanhoPagina)
+                    .ToArray();
             }
         }
 
