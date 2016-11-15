@@ -120,11 +120,8 @@ class TelaPrincipal {
             let palavras = window.localStorage.getObj(usuario.Nome);
             palavras.splice(0, 1);
             window.localStorage.setObj(usuario.Nome, palavras);
-            $('#winner').show();
-            $('#btn-jogar-novamente')
-              .on('click', () => {
-                jogoDaForca.renderizarTela('principal');
-              });
+            self.acertouPalavra();
+
           });
       } else {
         self.$btnSubmitLetra.text('Palpitar!');
@@ -181,5 +178,18 @@ class TelaPrincipal {
           $('#winner').show();
         });
     }
+  }
+
+  acertouPalavra() {
+      $('#winner').show();
+      $('#div-palpite-palavra').hide();
+      $('#div-palpite-letra').hide();
+      $('#btn-jogar-novamente')
+        .on('click', () => {
+            jogoDaForca.renderizarTela('principal');
+            $('#div-palpite-palavra').show();
+            $('#div-palpite-letra').show();
+
+        });
   }
 }
