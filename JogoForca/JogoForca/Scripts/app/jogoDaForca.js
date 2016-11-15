@@ -1,9 +1,5 @@
 let jogoDaForca = {};
 
-jogoDaForca.toggleLoader = () => {
-  ['.loader', '.tela'].forEach(seletor => $(seletor).toggle());
-};
-
 jogoDaForca.iniciar = function () {
   return jogoDaForca.renderizarTela('login');
 };

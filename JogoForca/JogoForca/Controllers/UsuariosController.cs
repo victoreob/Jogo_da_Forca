@@ -34,45 +34,16 @@ namespace JogoForca.Controllers
             return CreatedAtRoute("DefaultApi", new { id = usuario.Id }, usuario);
         }
 
-        // PUT: api//usuarios/adicionarPontos
-        [HttpPut]
-        [Route("api/usuarios/adicionarPontos")]
-        [ResponseType(typeof(Usuario))]
-        public IHttpActionResult PutAdicionarPontos(Usuario usuario)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            usuarioServico.AdicionarPontos(usuario);
-
-            return Ok(usuario);
-        }
-
-        // PUT: api/usuarios/resetarPontos
-        [HttpPut]
-        [Route("api/usuarios/resetarPontos")]
-        [ResponseType(typeof(Usuario))]
-        public IHttpActionResult PutResetarPontos(Usuario usuario)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            usuarioServico.ResetarPontos(usuario);
-            usuario.Pontuacao = 0;
-
-            return Ok(usuario);
-        }
-
         // GET: api/usuarios/buscarPorNome
         [HttpGet]
-        [Route("api/usuarios/buscarPorNomeENivel")]
+        [Route("api/usuarios/buscarPorNome")]
         [ResponseType(typeof(Usuario))]
-        public IHttpActionResult GetUsuarioPorNomeENivel(string nome, string nivel)
+        public IHttpActionResult GetUsuarioPorNome(string nome)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            Usuario usuarioResposta = usuarioServico.BuscarUsuarioPorNomeENivel(nome, nivel);
+            Usuario usuarioResposta = usuarioServico.BuscarUsuarioPorNome(nome);
 
             if (usuarioResposta == null)
                 return Ok(new Usuario());
@@ -95,42 +66,6 @@ namespace JogoForca.Controllers
                 return NotFound();
 
             return Ok(usuarioResposta);
-        }
-
-
-        ////GET: api/usuarios/ranking
-        //[HttpGet]
-        //[Route("api/usuarios/buscarRanking")]
-        //[ResponseType(typeof(IList<Usuario>))]
-        //public IHttpActionResult GetRanking()
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest(ModelState);
-
-        //    IList<Usuario> usuarios = usuarioServico.CriarRanqueamento();
-            
-        //    if (usuarios == null)
-        //        return NotFound();
-
-        //    return Ok(usuarios);
-        //}
-
-
-        // GET: api/Usuario
-        public IHttpActionResult GetUsuario(int pagina = 1, int tamanhoPagina = 5)
-        {
-            //pagina = pagina ?? 1;
-            //tamanhoPagina = tamanhoPagina ?? 5;
-            // simulando lentidão
-            System.Threading.Thread.Sleep(1500);
-
-            var registros = usuarioServico.CriarRanqueamento(pagina, tamanhoPagina);
-
-            return Ok(new
-            {
-                total = usuarioServico.ContarRegistros(),
-                dados = registros
-            });
         }
     }
 }

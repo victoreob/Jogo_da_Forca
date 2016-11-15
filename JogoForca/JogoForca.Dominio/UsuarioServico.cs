@@ -19,9 +19,9 @@ namespace JogoForca.Dominio
         }
 
 
-        public Usuario BuscarUsuarioPorNomeENivel(string nomeUsuario, string nivel)
+        public Usuario BuscarUsuarioPorNome(string nomeUsuario)
         {
-            return usuarioRepositorio.BuscarPorNomeENivel(nomeUsuario, nivel);
+            return usuarioRepositorio.BuscarPorNome(nomeUsuario);
         }
 
         public Usuario BuscarUsuarioPorId(int id)
@@ -33,29 +33,5 @@ namespace JogoForca.Dominio
         {
             usuarioRepositorio.Criar(usuario);
         }
-
-        public void AdicionarPontos(Usuario usuario)
-        {
-            usuarioRepositorio.AdicionarPontos(usuario);
-        }
-
-
-        public void ResetarPontos(Usuario usuario)
-        {
-            usuario.Pontuacao = 0;
-
-            usuarioRepositorio.ResetarPontos(usuario);
-        }
-
-        public IEnumerable<Usuario> CriarRanqueamento(int pagina, int tamanhoPagina)
-        {
-            return usuarioRepositorio.Ranking(pagina, tamanhoPagina);
-        }
-
-        public int ContarRegistros()
-        {
-            return usuarioRepositorio.ContarRegristros();
-        }
-
     }
 }

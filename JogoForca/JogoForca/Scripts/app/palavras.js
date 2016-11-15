@@ -9,10 +9,10 @@
   }
 
   esconderAPalavra(palavra) {
-    let tam = palavra.length;
-    var palavraEscondida = "";
+    let tam = palavra.length - 1;
+    var palavraEscondida = "_";
     for (let i = 0; i < tam; i++) {
-      palavraEscondida += "_ ";
+      palavraEscondida += " _";
     }
     return palavraEscondida;
   }
@@ -24,9 +24,9 @@
       if (palavra[i] === letra && arrayDeLetras[i] === "_")
         arrayDeLetras[i] = letra;
     }
-    let palavraResultado = "";
-    for (let i = 0; i < arrayDeLetras.length; i++) {
-      palavraResultado += arrayDeLetras[i] + " ";
+    let palavraResultado = arrayDeLetras[0];
+    for (let i = 1; i < arrayDeLetras.length; i++) {
+      palavraResultado += " " + arrayDeLetras[i];
     }
     return palavraResultado;
   }

@@ -26,11 +26,11 @@ namespace JogoForca.Servicos
             }
         }
 
-        public static DificuldadeServico MontarDificuldadeServico
+        public static JogadaServico MontarJogadaServico
         {
             get
             {
-                return new DificuldadeServico(new DificuldadeRepositorio());
+                return new JogadaServico(new JogadaRepositorio());
             }
         }
     }

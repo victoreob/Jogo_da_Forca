@@ -11,7 +11,6 @@ namespace JogoForca.Repositorio.Repositorios
 {
     public class UsuarioRepositorio : IUsuarioRepositorio
     {
-
         public int ContarRegistros()
         {
             using (var context = new ContextoDeDados())
@@ -20,23 +19,11 @@ namespace JogoForca.Repositorio.Repositorios
             }
         }
 
-        public void AdicionarPontos(Usuario usuario)
+        public Usuario BuscarPorNome(string nome)
         {
             using (var context = new ContextoDeDados())
             {
-                context.Entry<Usuario>(usuario).State = EntityState.Modified;
-                context.SaveChanges();
-            }
-        }
-
-        public Usuario BuscarPorNomeENivel(string nome, string nivel)
-        {
-            using (var context = new ContextoDeDados())
-            {
-                var usuario = 
-                    context.Usuario.FirstOrDefault(u => u.Nome.Equals(nome) && u.Dificuldade.Equals(nivel));
-
-                return usuario;
+                return context.Usuario.FirstOrDefault(u => u.Nome.Equals(nome));
             }
         }
 
@@ -77,7 +64,7 @@ namespace JogoForca.Repositorio.Repositorios
             }
         }
 
-        public void ResetarPontos(Usuario usuario)
+        public void ContabilizarPontos(Usuario usuario)
         {
             using (var context = new ContextoDeDados())
             {

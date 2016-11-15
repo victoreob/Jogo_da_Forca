@@ -20,7 +20,7 @@ namespace JogoForca.Repositorio
 
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Palavra> Palavra { get; set; }
-        //public DbSet<Dificuldade> Dificuldade { get; set; }
+        public DbSet<Jogada> Jogada { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -3,6 +3,7 @@ class TelaLogin {
   constructor(seletor) {
     this.$elem = $(seletor);
     this.usuarios = new Usuarios();
+    this.jogadas = new Jogadas();
     this.registrarBindsEventos();
     this.renderizarEstadoInicial();
   }
@@ -32,40 +33,75 @@ class TelaLogin {
         this.defaultShowErrors();
       },
       submitHandler: function () {
-        let $usuario = $('#usuario').val();
+        let $nomeUsuario = $('#usuario').val();
         let $dificuldade = $('input[type="radio"][name="dificuldade"]:checked', this.$formLogin).val();
-        self.salvarUsuarioNaSessao($usuario, $dificuldade);
+        self.verificarUsuarioExistente($nomeUsuario, $dificuldade);
         self.$btnSubmit.text('Carregando...');
         self.$btnSubmit.attr('disabled', true);
       }
     });
   }
 
-  salvarUsuarioNaSessao(usuario, dificuldade) {
+  verificarUsuarioExistente(nomeUsuario, dificuldade) {
     let usuarioASerSalvo = {
-      nome: usuario,
-      pontuacao: 0,
-      dificuldade: dificuldade
+      Nome: nomeUsuario,
+      Pontuacao: 0
     };
     let self = this;
-    this.usuarios.buscarPorNomeENivel(usuarioASerSalvo)
-      .done(function (res) {
-        if (res.Id === 0) {
+    this.usuarios.buscarPorNome(usuarioASerSalvo)
+      .done(function (usuarioRespostaBusca) {
+        console.log('usuario resposta busca', usuarioRespostaBusca)
+        if (usuarioRespostaBusca.Id === 0) {
           self.usuarios.cadastrar(usuarioASerSalvo)
-            .done(function (res) {
-              console.log('res', res);
-              window.sessionStorage.setObj('usuario', res);
-              setTimeout(function () {
-                jogoDaForca.renderizarTela('principal');
-              }, 2000);
+            .done(function (usuarioRespostaCadastro) {
+              console.log('usuario resposta cadastro', usuarioRespostaCadastro);
+              self.salvarUsuarioNaSessao(usuarioRespostaCadastro);
+              self.verificarJogadaExistente(usuarioRespostaCadastro.Id, dificuldade);
             });
         } else {
-          console.log('res', res);
-          window.sessionStorage.setObj('usuario', res);
-          setTimeout(function () {
-            jogoDaForca.renderizarTela('principal');
-          }, 2000);
+          self.salvarUsuarioNaSessao(usuarioRespostaBusca);
+          self.verificarJogadaExistente(usuarioRespostaBusca.Id, dificuldade);
         }
       });
+  }
+
+  salvarUsuarioNaSessao(usuario) {
+    console.log('usuario salvo na sessao', usuario);
+    window.sessionStorage.setObj('usuario', usuario);
+  }
+
+  verificarJogadaExistente(idUsuario, dificuldade) {
+    let self = this;
+    let jogadaASerSalva = {
+      Dificuldade: dificuldade,
+      Pontos: 0,
+      UsuarioRefId: idUsuario
+    }
+    self.jogadas.buscarPorJogada(jogadaASerSalva)
+      .done(function (jogadaRespostaBusca) {
+        console.log('jogada resposta busca', jogadaRespostaBusca);
+        if (jogadaRespostaBusca.Id === 0) {
+          self.jogadas.cadastrar(jogadaASerSalva)
+            .done(function (jogadaRespostaCadastro) {
+              console.log('jogada resposta cadastro', jogadaRespostaCadastro);
+              self.salvarJogadaNaSessao(jogadaRespostaCadastro);
+              self.renderizarTelaPrincipalComDelay();
+            });
+        } else {
+          self.salvarJogadaNaSessao(jogadaRespostaBusca);
+          self.renderizarTelaPrincipalComDelay();
+        }
+      });
+  }
+
+  salvarJogadaNaSessao(jogada) {
+    console.log('jogada salvo na sessao', jogada);
+    window.sessionStorage.setObj('jogada', jogada);
+  }
+
+  renderizarTelaPrincipalComDelay() {
+    setTimeout(function () {
+      jogoDaForca.renderizarTela('principal');
+    }, 2000);
   }
 }

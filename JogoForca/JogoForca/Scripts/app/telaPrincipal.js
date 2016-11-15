@@ -5,9 +5,11 @@ class TelaPrincipal {
     $('#game-over').hide();
     $('#winner').hide();
     this.palavras = new Palavras();
+    this.jogadas = new Jogadas();
     this.usuarios = new Usuarios();
     this.registrarBindsEventos();
     this.renderizarEstadoInicial();
+    this.errosLetras = 0;
   }
 
   registrarBindsEventos() {
@@ -27,14 +29,15 @@ class TelaPrincipal {
   pegarPalavras() {
     let self = this;
     let usuario = window.sessionStorage.getObj('usuario');
+    let jogada = window.sessionStorage.getObj('jogada');
     console.log(usuario);
     let palavras = window.localStorage.getObj(usuario.Nome);
     if (palavras == null) {
-      switch (usuario.Dificuldade){
+      switch (jogada.Dificuldade) {
         case 'normal':
           self.palavras.pegarPalavrasNivelNormal()
             .done((res) => {
-              self.renderizarPalavra(res[0]);
+              self.renderizarPalavra(res[0].Nome);
               window.localStorage.setObj(usuario.Nome, res.map((p) => p.Nome));
               this.$elem.show();
             });
@@ -42,9 +45,21 @@ class TelaPrincipal {
         case 'bh':
           self.palavras.pegarRegistrosNivelBh()
             .done((res) => {
-              self.renderizarPalavra(res[0]);
+              self.renderizarPalavra(res[0].Nome);
               window.localStorage.setObj(usuario.Nome, res.map((p) => p.Nome));
               this.$elem.show();
+              self.gameOverBH = setTimeout(function () {
+                let jogada = window.sessionStorage.getObj('jogada');
+                self.jogadas.buscarPorJogada(jogada)
+                  .done(function (jogadaBuscada) {
+                    if (jogadaBuscada.Pontos < jogada.Pontos) {
+                      self.jogadas.adicionarPontos(jogada);
+                    }
+                    jogada.Pontos = 0;
+                    window.sessionStorage.setItem('jogada', jogada);
+                  });
+                self.errouPalavra();
+              }, 20000);
             });
           break;
       }
@@ -52,6 +67,14 @@ class TelaPrincipal {
       console.log(palavras);
       self.renderizarPalavra(palavras[0]);
       this.$elem.show();
+      if(jogada.Dificuldade === 'bh'){
+        self.gameOverBH = setTimeout(function () {
+          let jogada = window.sessionStorage.getObj('jogada');
+          jogada.Pontos = 0;
+          window.sessionStorage.setItem('jogada', jogada);
+          $('#game-over').show;
+        }, 20000);
+      }
     }
   }
 
@@ -66,6 +89,7 @@ class TelaPrincipal {
 
     this.$formPalpiteLetra.submit((e) => {
       try {
+        clearTimeout(self.gameOverBH);
         self.$btnSubmitLetra.text('Palpitando...');
         self.$btnSubmitLetra.attr('disabled', true);
         let letra = self.$formPalpiteLetra.find('#letra-palpite').val();
@@ -76,7 +100,6 @@ class TelaPrincipal {
       catch (erro) {
         console.error('ops, erro:', erro);
       }
-      
     });
 
     let validator = this.$formPalpiteLetra.validate({
@@ -108,21 +131,18 @@ class TelaPrincipal {
     if (palavra.indexOf(letra) !== -1) {
       let palavraASerRenderizada = self.palavras.mostrarLetras(palavra, palavraComUnderline, letra);
       if (palavraASerRenderizada.indexOf("_") === -1) {
+        self.$btnSubmitLetra.text('Palpitar!');
+        self.$btnSubmitLetra.attr('disabled', false);
+        self.renderizarPalavraComPalpite(palavraASerRenderizada);
+        $('#letra-palpite').val("");
         let usuario = window.sessionStorage.getObj('usuario');
-        self.usuarios.adicionarPontos(usuario)
-          .done(function (res) {
-            window.sessionStorage.setObj('usuario', res);
-            self.$btnSubmitLetra.text('Palpitar!');
-            self.$btnSubmitLetra.attr('disabled', false);
-            self.renderizarPalavraComPalpite(palavraASerRenderizada);
-            $('#letra-palpite').val("");
-            let usuario = window.sessionStorage.getObj('usuario');
-            let palavras = window.localStorage.getObj(usuario.Nome);
-            palavras.splice(0, 1);
-            window.localStorage.setObj(usuario.Nome, palavras);
-            self.acertouPalavra();
-
-          });
+        let palavras = window.localStorage.getObj(usuario.Nome);
+        palavras.splice(0, 1);
+        window.localStorage.setObj(usuario.Nome, palavras);
+        let jogada = window.sessionStorage.getObj('jogada');
+        jogada.Pontos++;
+        window.sessionStorage.setObj('jogada', jogada);
+        self.acertouPalavra();
       } else {
         self.$btnSubmitLetra.text('Palpitar!');
         self.$btnSubmitLetra.attr('disabled', false);
@@ -132,9 +152,59 @@ class TelaPrincipal {
     } else {
       self.$btnSubmitLetra.text('Palpitar!');
       self.$btnSubmitLetra.attr('disabled', false);
-      console.log('nao tem a letra');
+      self.errosLetras++;
+      let dificuldade = window.sessionStorage.getObj('jogada').Dificuldade;
+      switch (dificuldade) {
+        case 'normal':
+          if (self.errosLetras == 5) {
+            let jogada = window.sessionStorage.getObj('jogada');
+            self.jogadas.buscarPorJogada(jogada)
+              .done(function (jogadaBuscada) {
+                if (jogadaBuscada.Pontos < jogada.Pontos) {
+                  self.jogadas.adicionarPontos(jogada);
+                }
+              });
+            jogada.Pontos = 0;
+            window.sessionStorage.setItem('jogada', jogada);
+            self.errouPalavra();
+          } else {
+            var letrasErradas = $('#letras-erradas').html();
+            letrasErradas += `<li>${letra}</li>`;
+          }
+          break;
+        case 'bh':
+          if (self.errosLetras == 2) {
+            let jogada = window.sessionStorage.getObj('jogada');
+            self.jogadas.buscarPorJogada(jogada)
+              .done(function (jogadaBuscada) {
+                if (jogadaBuscada.Pontos < jogada.Pontos) {
+                  self.jogadas.adicionarPontos(jogada);
+                }
+              });
+            jogada.Pontos = 0;
+            window.sessionStorage.setItem('jogada', jogada);
+            self.errouPalavra();
+          } else {
+            var letrasErradas = $('#letras-erradas').html();
+            letrasErradas += `<li>${letra}</li>`;
+          }
+          break;
+      }
       $('#letra-palpite').val("");
     }
+  }
+
+  acertouPalavra() {
+    $('#winner').show();
+    $('#div-palpite-palavra').hide();
+    $('#div-palpite-letra').hide();
+    $('#btn-jogar-novamente')
+      .on('click', () => {
+        jogoDaForca.renderizarTela('principal');
+        $('#div-palpite-palavra').show();
+        $('#div-palpite-letra').show();
+
+      });
   }
 
   renderizarPalavraComPalpite(palavra) {
@@ -161,9 +231,13 @@ class TelaPrincipal {
         this.defaultShowErrors();
       },
       submitHandler: function () {
+        let jogada = window.sessionStorage.getObj('jogada');
+        if(jogada.Dificuldade === 'bh')
+          clearTimeout(self.gameOverBH);
         self.$btnSubmitPalavra.text('Palpitando...');
         self.$btnSubmitPalavra.attr('disabled', true);
-        let palavra = $('#palavra-palpite').val();
+        let palavra = self.$formPalpitePalavra.find('#palavra-palpite').val();
+        $('#palavra-palpite').val("");
         self.palpitarPalavra(palavra);
       }
     });
@@ -171,47 +245,41 @@ class TelaPrincipal {
 
   palpitarPalavra(palavraPalpitada) {
     let self = this;
+    let jogada = window.sessionStorage.getObj('jogada');
     let usuario = window.sessionStorage.getObj('usuario');
-    let palavra = window.localStorage.getObj(usuario.Nome)[0];
+    let palavras = window.localStorage.getObj(usuario.Nome);
+    let palavra = palavras[0];
 
     if (palavraPalpitada === palavra) {
-        console.log("Funcionou!");
-        self.usuarios.adicionarPontos(usuario)
-          .done(function (res) {
-              $('#palavra-palpite').val("");
-              let usuarioNovo = window.sessionStorage.getObj('usuario');
-              let palavras = window.localStorage.getObj(usuarioNovo.Nome);
-              palavras.splice(0, 1);
-              window.localStorage.setObj(usuarioNovo.Nome, palavras);
-              self.acertouPalavra();
-          });
+      console.log("Funcionou!");
+      let jogada = window.sessionStorage.getObj('jogada');
+      jogada.Pontos++;
+      window.sessionStorage.setObj('jogada', jogada);
+      self.jogadas.buscarPorJogada(jogada)
+        .done(function (jogadaBuscada) {
+          if (jogadaBuscada.Pontos < jogada.Pontos) {
+            self.jogadas.adicionarPontos(jogada);
+          }
+          $('#palavra-palpite').val("");
+          $('#palavra').text(palavras[0]);
+          palavras.splice(0, 1);
+          window.localStorage.setObj(usuario.Nome, palavras);
+          self.acertouPalavra();
+        });
     } else {
-        self.errouPalavra();
+      self.errouPalavra();
     }
   }
 
   errouPalavra() {
-      $('#game-over').show();
-      $('#div-palpite-palavra').hide();
-      $('#div-palpite-letra').hide();
-      $('#btn-tentar-novamente')
-        .on('click', () => {
-            jogoDaForca.renderizarTela('login');
-            $('#div-palpite-palavra').show();
-            $('#div-palpite-letra').show();
-        });
-  }
-
-  acertouPalavra() {
-      $('#winner').show();
-      $('#div-palpite-palavra').hide();
-      $('#div-palpite-letra').hide();
-      $('#btn-jogar-novamente')
-        .on('click', () => {
-            jogoDaForca.renderizarTela('principal');
-            $('#div-palpite-palavra').show();
-            $('#div-palpite-letra').show();
-
-        });
+    $('#game-over').show();
+    $('#div-palpite-palavra').hide();
+    $('#div-palpite-letra').hide();
+    $('#btn-tentar-novamente')
+      .on('click', () => {
+        jogoDaForca.renderizarTela('login');
+        $('#div-palpite-palavra').show();
+        $('#div-palpite-letra').show();
+      });
   }
 }

@@ -13,6 +13,7 @@ namespace JogoForca
 
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+                "~/Scripts/traducaoDeErros",
                 "~/Scripts/jquery.unobtrusive*",
                 "~/Scripts/jquery.validate*"));
 
@@ -20,6 +21,7 @@ namespace JogoForca
                "~/Scripts/handlebars.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
+                "~/Scripts/app/jogadas.js",
                 "~/Scripts/app/usuarios.js",
                "~/Scripts/app/palavras.js",
                "~/Scripts/app/telaPrincipal.js",

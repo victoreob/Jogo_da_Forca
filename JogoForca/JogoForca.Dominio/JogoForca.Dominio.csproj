@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,11 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dificuldade.cs" />
-    <Compile Include="DificuldadeServico.cs" />
+    <Compile Include="Jogada.cs" />
+    <Compile Include="JogadaServico.cs" />
     <Compile Include="Palavra.cs" />
     <Compile Include="PalavraServico.cs" />
-    <Compile Include="Repositorio\IDificuldadeRepositorio.cs" />
+    <Compile Include="Repositorio\IJogadaRepositorio.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio\IPalavraRepositorio.cs" />
