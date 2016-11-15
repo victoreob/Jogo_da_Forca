@@ -50,14 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContextoDeDados.cs" />
+    <Compile Include="Migrations\201611150123341_NovaMigration.cs" />
+    <Compile Include="Migrations\201611150123341_NovaMigration.Designer.cs">
+      <DependentUpon>201611150123341_NovaMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repositorios\DificuldadeRepositorio.cs" />
     <Compile Include="Migrations\201611131712060_Inicial.cs" />
     <Compile Include="Migrations\201611131712060_Inicial.Designer.cs">
       <DependentUpon>201611131712060_Inicial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611141736173_AdicionarTabelaDificuldade.cs" />
-    <Compile Include="Migrations\201611141736173_AdicionarTabelaDificuldade.Designer.cs">
-      <DependentUpon>201611141736173_AdicionarTabelaDificuldade.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,8 +78,8 @@
     <EmbeddedResource Include="Migrations\201611131712060_Inicial.resx">
       <DependentUpon>201611131712060_Inicial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611141736173_AdicionarTabelaDificuldade.resx">
-      <DependentUpon>201611141736173_AdicionarTabelaDificuldade.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611150123341_NovaMigration.resx">
+      <DependentUpon>201611150123341_NovaMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

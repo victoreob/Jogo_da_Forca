@@ -12,12 +12,14 @@ namespace JogoForca.Repositorio
     {
         public string NomeDaDificuldade(int id)
         {
+            /*
             using (var context = new ContextoDeDados())
             {
                 var dificuldade =  context.Dificuldade.FirstOrDefault(d => d.Id == id);
 
                 return dificuldade.Nome;
-            }
+            }*/
+            return null;
         }
     }
 }

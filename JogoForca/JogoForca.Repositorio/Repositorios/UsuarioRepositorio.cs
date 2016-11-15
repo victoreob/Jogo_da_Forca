@@ -1,11 +1,11 @@
-﻿using JogoForca.Dominio.Repositorio;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JogoForca.Dominio.Models;
 using System.Data.Entity;
+using JogoForca.Dominio.Repositorio;
+using JogoForca.Dominio.Models;
 
 namespace JogoForca.Repositorio.Repositorios
 {
@@ -24,7 +24,10 @@ namespace JogoForca.Repositorio.Repositorios
         {
             using (var context = new ContextoDeDados())
             {
-                return context.Usuario.FirstOrDefault(u => u.Nome.Equals(nome)); //&& u.Dificuldade.Equals(nivel));
+                var usuario = 
+                    context.Usuario.FirstOrDefault(u => u.Nome.Equals(nome) && u.Dificuldade.Equals(nivel));
+
+                return usuario;
             }
         }
 

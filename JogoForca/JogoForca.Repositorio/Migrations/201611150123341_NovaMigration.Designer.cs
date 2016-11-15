@@ -7,13 +7,13 @@ namespace JogoForca.Repositorio.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AdicionarTabelaDificuldade : IMigrationMetadata
+    public sealed partial class NovaMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AdicionarTabelaDificuldade));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(NovaMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201611141736173_AdicionarTabelaDificuldade"; }
+            get { return "201611150123341_NovaMigration"; }
         }
         
         string IMigrationMetadata.Source
