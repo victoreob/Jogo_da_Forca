@@ -51,7 +51,7 @@ namespace JogoForca.Repositorio
             }
         }
 
-        public IEnumerable<Jogada> Ranking(int pagina, int tamanhoPagina)
+        public IEnumerable<Jogada> Ranking(int pagina, int tamanhoPagina, string filtro = "")
         {
 
             // tamanhoPagina = 1
@@ -61,11 +61,23 @@ namespace JogoForca.Repositorio
 
             using (var context = new ContextoDeDados())
             {
-                return context.Jogada
+                if(filtro == "")
+                {
+                    return context.Jogada
                     .OrderBy(_ => _.Pontos)
                     .Skip(tamanhoPagina * (pagina - 1))
                     .Take(tamanhoPagina)
                     .ToArray();
+                }else
+                {
+                    return context.Jogada
+                    .OrderByDescending(_ => _.Pontos)
+                    .ThenBy(_ => _.Usuario.Nome)
+                    .Skip(tamanhoPagina * (pagina - 1))
+                    .Take(tamanhoPagina)
+                    .ToArray();
+                }
+                
             }
         }
     }

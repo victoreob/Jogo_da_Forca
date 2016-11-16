@@ -6,7 +6,7 @@
 
   resetarPontos(jogada) {
     //resetando pontuacao
-    jogada.Pontuacao = 0;
+    jogada.Pontos = 0;
     return $.ajax({
       url: 'api/jogadas/alterarPontos',
       type: 'PUT',
@@ -26,7 +26,7 @@
     return $.get('api/Jogadas', { idUsuario: jogada.UsuarioRefId, dificuldade: jogada.Dificuldade });
   }
 
-  buscarRanking() {
-    return $.get('api/usuarios/buscarRanking');
+  buscarRanking(pagina, filtro) {
+    return $.get('api/usuarios/buscarRanking', { pagina: pagina, filtro: filtro);
   }
 }

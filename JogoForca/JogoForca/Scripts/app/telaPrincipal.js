@@ -10,17 +10,33 @@ class TelaPrincipal {
     this.registrarBindsEventos();
     this.renderizarEstadoInicial();
     this.errosLetras = 0;
+    this.acertosLetras = 0;
   }
 
   registrarBindsEventos() {
     this.validarLetraFomulario();
     this.validarPalavraFormulario();
+    this.validarFiltroFormulario();
     let self = this;
+    self.$btnProximaPagina = $('#btn-proxima-pagina');
+    self.$btnPaginaAnterior = $('#btn-pagina-anterior');
+    self.$btnProximaPagina.on('click', self.obterProximaPagina.bind(self));
+    self.$btnPaginaAnterior.on('click', self.obterPaginaAnterior.bind(self));
+    if (self.paginaAtual <= 1) {
+      self.$btnPaginaAnterior.attr('disabled', true);
+    } else {
+      self.$btnPaginaAnterior.removeAttr('disabled');
+      self.$btnProximaPagina.removeAttr('disabled');
+    }
+    let ultimaPagina = self.paginaAtual * self.qtdHeroisPorPagina >= self.qtdTotalRegistros;
+    if (ultimaPagina) {
+      self.$btnProximaPagina.attr('disabled', true);
+    }
     $('#resetar-jogo').on('click', function () {
-      self.jogadas.resetarPontos()
+      let jogada = window.sessionStorage.getObj('jogada');
+      self.jogadas.resetarPontos(jogada)
         .done(() => {
           let usuario = window.sessionStorage.getObj('usuario');
-          let jogada = window.sessionStorage.getObj('jogada');
           if (jogada.Dificuldade === 'normal')
             window.localStorage.setObj(usuario.Nome + jogada.Dificuldade, self.palavras.pegarPalavrasNivelNormal());
           else
@@ -28,6 +44,44 @@ class TelaPrincipal {
           jogoDaForca.renderizarTela('login');
         });
     });
+    $('#leaderboard').on('click', function () {
+      let $subTelas = $('.sub-tela');
+      $.each($subTelas, (indice, elem) => $(elem).hide());
+      self.carregarERenderizarJogadas(1);
+    });
+  }
+
+  obterProximaPagina() {
+    this.carregarERenderizarJogadas(++this.paginaAtual);
+  }
+
+  obterPaginaAnterior() {
+    this.carregarERenderizarJogadas(--this.paginaAtual);
+  }
+
+  carregarERenderizarJogadas(pagina) {
+    self.jogadas.buscarRanking(pagina)
+          .done(function (res) {
+            self.paginaAtual = res[0];
+            let jogadas = [];
+            for (let x = 0; x < res[1].length; xi++) {
+              self.usuarios.buscarPorId(res[1][x].UsuarioRefId)
+                .done(function (res) {
+                  nomes.push(res.Nome);
+                });
+            }
+            let jogadasLeaderboard = [];
+            for (let i = 0; i < res[1].length; i++) {
+              jogadasLeaderboard[i] = {
+                pontuacao: (self.paginaAtual * res[1].length) - res[1].length + i,
+                nome: nomes[i],
+                pontuacao: res[1].Pontos,
+                dificuldade: res[1].Dificuldade
+              };
+            }
+            $('#Leaderboard').show();
+            jogoDaForca.render('#jogadas', 'leaderboard', jogadasLeaderboard);
+          });
   }
 
   renderizarEstadoInicial() {
@@ -142,8 +196,10 @@ class TelaPrincipal {
     let jogada = window.sessionStorage.getObj('jogada');
     let palavra = window.localStorage.getObj(usuario.Nome+jogada.Dificuldade)[0];
     let palavraComUnderline = $('#palavra').text();
-    if (palavra.indexOf(letra) !== -1) {
+    if (palavra.toUpperCase().indexOf(letra.toUpperCase()) !== -1) {
       let palavraASerRenderizada = self.palavras.mostrarLetras(palavra, palavraComUnderline, letra);
+      self.acertosLetras++;
+      $('#pontuacao-acertos').text(self.acertosLetras);
       if (palavraASerRenderizada.indexOf("_") === -1) {
         self.$btnSubmitLetra.text('Palpitar!');
         self.$btnSubmitLetra.attr('disabled', false);
@@ -153,7 +209,7 @@ class TelaPrincipal {
         let palavras = window.localStorage.getObj(usuario.Nome+jogada.Dificuldade);
         palavras.splice(0, 1);
         window.localStorage.setObj(usuario.Nome+jogada.Dificuldade, palavras);
-        let jogada = window.sessionStorage.getObj('jogada');
+        jogada = window.sessionStorage.getObj('jogada');
         jogada.Pontos++;
         window.sessionStorage.setObj('jogada', jogada);
         self.acertouPalavra();
@@ -167,6 +223,7 @@ class TelaPrincipal {
       self.$btnSubmitLetra.text('Palpitar!');
       self.$btnSubmitLetra.attr('disabled', false);
       self.errosLetras++;
+      $('#pontuacao-erros').text(self.errosLetras);
       let dificuldade = window.sessionStorage.getObj('jogada').Dificuldade;
       switch (dificuldade) {
         case 'normal':
@@ -184,6 +241,7 @@ class TelaPrincipal {
           } else {
             var letrasErradas = $('#letras-erradas').html();
             letrasErradas += `<li>${letra}</li>`;
+            $('#letras-erradas').html(letrasErradas);
           }
           break;
         case 'bh':
@@ -201,6 +259,7 @@ class TelaPrincipal {
           } else {
             var letrasErradas = $('#letras-erradas').html();
             letrasErradas += `<li>${letra}</li>`;
+            $('#letras-erradas').html(letrasErradas);
           }
           break;
       }
@@ -289,5 +348,64 @@ class TelaPrincipal {
         $('#div-palpite-palavra').show();
         $('#div-palpite-letra').show();
       });
+  }
+
+  validarFiltroFomulario() {
+    this.$formFiltro = $('#form-filtro-usuario');
+    this.$btnSubmitFiltro = this.$formFiltro.find('button[type=submit]');
+    let self = this;
+    this.$formFiltro.submit((e) => {
+      try {
+        clearTimeout(self.gameOverBH);
+        self.$btnSubmitFiltro.text('Palpitando...');
+        self.$btnSubmitFiltro.attr('disabled', true);
+        let filtro = self.$formFiltro.find('#filtro').val();
+        self.jogadas.buscarRanking(filtro)
+          .done(function (res) {
+            self.paginaAtual = res[0];
+            let jogadas =[];
+            for (let x = 0; x < res[1].length;xi++) {
+              self.usuarios.buscarPorId(res[1][x].UsuarioRefId)
+                .done(function(res){
+                  nomes.push(res.Nome);
+                });
+            }
+            let jogadasLeaderboard = [];
+            for (let i = 0; i < res[1].length; i++) {
+              jogadasLeaderboard[i] = {
+                pontuacao: (self.paginaAtual * res[1].length)- res[1].length+i,
+                nome: nomes[i],
+                pontuacao: res[1].Pontos,
+                dificuldade: res[1].Dificuldade
+              };
+            }
+            jogoDaForca.render('#jogadas', 'leaderboard', jogadasLeaderboard);
+          });
+        return e.preventDefault();
+      }
+      catch (erro) {
+        console.error('ops, erro:', erro);
+      }
+    });
+
+    let validator = this.$formFiltro.validate({
+      highlight: function (element, errorClass, validClass) {
+        $(element).closest('.form-group').addClass('has-error');
+      },
+      unhighlight: function (element, errorClass, validClass) {
+        $(element).closest('.form-group').removeClass('has-error');
+      },
+      showErrors: function () {
+        if (validator.numberOfInvalids() === 0) {
+          self.$btnSubmitFiltro.removeAttr('disabled');
+        } else {
+          self.$btnSubmitFiltro.attr('disabled', true);
+        }
+        this.defaultShowErrors();
+      },
+      submitHandler: function () {
+        return false;
+      }
+    });
   }
 }

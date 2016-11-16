@@ -21,8 +21,11 @@
     let tam = palavra.length;
     let arrayDeLetras = palavraComUnderline.split(" ");
     for (let i = 0; i < arrayDeLetras.length; i++) {
-      if (palavra[i] === letra && arrayDeLetras[i] === "_")
-        arrayDeLetras[i] = letra;
+      if (palavra[i].toUpperCase() === letra.toUpperCase() && arrayDeLetras[i] === "_")
+        if(i == 0)
+          arrayDeLetras[i] = letra.toUpperCase();
+        else
+          arrayDeLetras[i] = letra.toLowerCase();
     }
     let palavraResultado = arrayDeLetras[0];
     for (let i = 1; i < arrayDeLetras.length; i++) {

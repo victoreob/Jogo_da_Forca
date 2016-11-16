@@ -32,9 +32,9 @@ namespace JogoForca.Dominio
             jogadaRepositorio.Criar(jogada);
         }
 
-        public IEnumerable<Jogada> CriarRanqueamento(int pagina, int tamanhoPagina)
+        public IEnumerable<Jogada> CriarRanqueamento(int pagina, int tamanhoPagina, string filtro = "")
         {
-            return jogadaRepositorio.Ranking(pagina, tamanhoPagina);
+            return jogadaRepositorio.Ranking(pagina, tamanhoPagina, filtro);
         }
 
         public int ContarRegistros()

@@ -29,14 +29,15 @@
         <div class="row">
             <h2 class="titulo-jogo">Bem vindo ao Jogo da Forca!</h2>
         </div>
+        <button id="leaderboard" class="btn btn-primary">Leaderboard</button>
         <!-- <div id="pontuacao">  </div>  -->
         <div id="acertos">
             ACERTOS
-            <h4 id="pontuacao-acertos"> 0 </h4>
+            <h4 id="pontuacao-acertos"></h4>
         </div>
         <div id="erros">
             ERROS
-            <h4 id="pontuacao-erros"> 0 </h4>
+            <h4 id="pontuacao-erros"></h4>
         </div>
 
         <div class="row">
@@ -76,7 +77,10 @@
                     </form>
                 </div>
             </div>
-            <ul id="letras-erradas"></ul>
+            <div>
+                <h4>Letras Erradas:</h4>
+                <ul id="letras-erradas"></ul>
+            </div>  
         </div>
     </div>
     <div id="game-over">
@@ -92,6 +96,29 @@
         </h2>
         <button id="btn-jogar-novamente" class="btn btn-primary">Jogar Novamente</button>
     </div>
+</div>
+
+<div id="Leaderboard" class="sub-tela">
+
+    <form id="form-busca-jogador" class="form-inline filtro-pesquisa">
+        <div class="form-group">
+            <input type="text" name="filtro" id="filtro" class="form-control" placeholder="Digite aqui o nome do jogador...">
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 40px;">Posição</th>
+                <th style="width: 40px;">Usuário</th>
+                <th style="width: 40px;">Pontuação</th>
+                <th style="width: 40px;">Nível</th>
+            </tr>
+        </thead>
+        <tbody id="jogadas">
+
+        </tbody>
+    </table>
 </div>
 @section Scripts{
     @Scripts.Render("~/bundles/app")

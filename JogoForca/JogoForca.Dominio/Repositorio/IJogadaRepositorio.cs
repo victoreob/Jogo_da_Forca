@@ -11,7 +11,7 @@ namespace JogoForca.Dominio.Repositorio
         void Criar(Jogada jogada);
         void AlterarPontos(Jogada jogada);
         Jogada BuscarJogada(Jogada jogada);
-        IEnumerable<Jogada> Ranking(int pagina, int tamanhoPagina);
+        IEnumerable<Jogada> Ranking(int pagina, int tamanhoPagina, string filtro = "");
         int ContarRegristros();
     }
 }

@@ -64,18 +64,18 @@ namespace JogoForca.Controllers
         // GET: api/Usuario
         [HttpGet]
         [Route("api/jogadas/ranking")]
-        public IHttpActionResult GetRankingJogadas(int pagina = 1, int tamanhoPagina = 5)
+        public IHttpActionResult GetRankingJogadas(int pagina = 1, int tamanhoPagina = 5, string filtro = "")
         {
             //pagina = pagina ?? 1;
             //tamanhoPagina = tamanhoPagina ?? 5;
             // simulando lentidão
             System.Threading.Thread.Sleep(1500);
 
-            var registros = jogadaServico.CriarRanqueamento(pagina, tamanhoPagina);
+            var registros = jogadaServico.CriarRanqueamento(pagina, tamanhoPagina, filtro);
 
             return Ok(new
             {
-                total = jogadaServico.ContarRegistros(),
+                pagina = pagina,
                 dados = registros
             });
         }

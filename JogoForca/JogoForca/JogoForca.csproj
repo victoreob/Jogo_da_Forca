@@ -283,7 +283,7 @@
     <Content Include="Scripts\respond.min.js" />
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\traducaoDeErros.js" />
-    <Content Include="Static\Templates\Leaderboard.html" />
+    <Content Include="Static\Templates\leaderboard.tpl.html" />
     <Content Include="Static\Templates\letras-erradas.tpl.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
