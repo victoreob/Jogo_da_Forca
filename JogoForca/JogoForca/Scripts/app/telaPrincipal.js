@@ -15,6 +15,19 @@ class TelaPrincipal {
   registrarBindsEventos() {
     this.validarLetraFomulario();
     this.validarPalavraFormulario();
+    let self = this;
+    $('#resetar-jogo').on('click', function () {
+      self.jogadas.resetarPontos()
+        .done(() => {
+          let usuario = window.sessionStorage.getObj('usuario');
+          let jogada = window.sessionStorage.getObj('jogada');
+          if (jogada.Dificuldade === 'normal')
+            window.localStorage.setObj(usuario.Nome + jogada.Dificuldade, self.palavras.pegarPalavrasNivelNormal());
+          else
+            window.localStorage.setObj(usuario.Nome + jogada.Dificuldade, self.palavras.pegarRegistrosNivelBh());
+          jogoDaForca.renderizarTela('login');
+        });
+    });
   }
 
   renderizarEstadoInicial() {
@@ -31,14 +44,14 @@ class TelaPrincipal {
     let usuario = window.sessionStorage.getObj('usuario');
     let jogada = window.sessionStorage.getObj('jogada');
     console.log(usuario);
-    let palavras = window.localStorage.getObj(usuario.Nome);
+    let palavras = window.localStorage.getObj(usuario.Nome+jogada.Dificuldade);
     if (palavras == null) {
       switch (jogada.Dificuldade) {
         case 'normal':
           self.palavras.pegarPalavrasNivelNormal()
             .done((res) => {
               self.renderizarPalavra(res[0].Nome);
-              window.localStorage.setObj(usuario.Nome, res.map((p) => p.Nome));
+              window.localStorage.setObj(usuario.Nome+jogada.Dificuldade, res.map((p) => p.Nome));
               this.$elem.show();
             });
           break;
@@ -46,7 +59,7 @@ class TelaPrincipal {
           self.palavras.pegarRegistrosNivelBh()
             .done((res) => {
               self.renderizarPalavra(res[0].Nome);
-              window.localStorage.setObj(usuario.Nome, res.map((p) => p.Nome));
+              window.localStorage.setObj(usuario.Nome+jogada.Dificuldade, res.map((p) => p.Nome));
               this.$elem.show();
               self.gameOverBH = setTimeout(function () {
                 let jogada = window.sessionStorage.getObj('jogada');
@@ -71,8 +84,8 @@ class TelaPrincipal {
         self.gameOverBH = setTimeout(function () {
           let jogada = window.sessionStorage.getObj('jogada');
           jogada.Pontos = 0;
-          window.sessionStorage.setItem('jogada', jogada);
-          $('#game-over').show;
+          window.sessionStorage.setObj('jogada', jogada);
+          self.errouPalavra();
         }, 20000);
       }
     }
@@ -126,7 +139,8 @@ class TelaPrincipal {
   palpitarLetra(letra) {
     let self = this;
     let usuario = window.sessionStorage.getObj('usuario');
-    let palavra = window.localStorage.getObj(usuario.Nome)[0];
+    let jogada = window.sessionStorage.getObj('jogada');
+    let palavra = window.localStorage.getObj(usuario.Nome+jogada.Dificuldade)[0];
     let palavraComUnderline = $('#palavra').text();
     if (palavra.indexOf(letra) !== -1) {
       let palavraASerRenderizada = self.palavras.mostrarLetras(palavra, palavraComUnderline, letra);
@@ -136,9 +150,9 @@ class TelaPrincipal {
         self.renderizarPalavraComPalpite(palavraASerRenderizada);
         $('#letra-palpite').val("");
         let usuario = window.sessionStorage.getObj('usuario');
-        let palavras = window.localStorage.getObj(usuario.Nome);
+        let palavras = window.localStorage.getObj(usuario.Nome+jogada.Dificuldade);
         palavras.splice(0, 1);
-        window.localStorage.setObj(usuario.Nome, palavras);
+        window.localStorage.setObj(usuario.Nome+jogada.Dificuldade, palavras);
         let jogada = window.sessionStorage.getObj('jogada');
         jogada.Pontos++;
         window.sessionStorage.setObj('jogada', jogada);
@@ -247,7 +261,7 @@ class TelaPrincipal {
     let self = this;
     let jogada = window.sessionStorage.getObj('jogada');
     let usuario = window.sessionStorage.getObj('usuario');
-    let palavras = window.localStorage.getObj(usuario.Nome);
+    let palavras = window.localStorage.getObj(usuario.Nome+jogada.Dificuldade);
     let palavra = palavras[0];
 
     if (palavraPalpitada === palavra) {
@@ -255,17 +269,11 @@ class TelaPrincipal {
       let jogada = window.sessionStorage.getObj('jogada');
       jogada.Pontos++;
       window.sessionStorage.setObj('jogada', jogada);
-      self.jogadas.buscarPorJogada(jogada)
-        .done(function (jogadaBuscada) {
-          if (jogadaBuscada.Pontos < jogada.Pontos) {
-            self.jogadas.adicionarPontos(jogada);
-          }
-          $('#palavra-palpite').val("");
-          $('#palavra').text(palavras[0]);
-          palavras.splice(0, 1);
-          window.localStorage.setObj(usuario.Nome, palavras);
-          self.acertouPalavra();
-        });
+      $('#palavra-palpite').val("");
+      $('#palavra').text(palavras[0]);
+      palavras.splice(0, 1);
+      window.localStorage.setObj(usuario.Nome+jogada.Dificuldade, palavras);
+      self.acertouPalavra();
     } else {
       self.errouPalavra();
     }
