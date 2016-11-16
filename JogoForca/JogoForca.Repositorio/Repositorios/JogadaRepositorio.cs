@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using JogoForca.Dominio;
 using System.Data.Entity;
 using JogoForca.Dominio.Models;
+using JogoForca.Repositorio.Repositorios;
 
 namespace JogoForca.Repositorio
 {
@@ -51,7 +52,7 @@ namespace JogoForca.Repositorio
             }
         }
 
-        public IEnumerable<Jogada> Ranking(int pagina, int tamanhoPagina, string filtro = "")
+        public IEnumerable<Jogada> Ranking(int pagina, int tamanhoPagina)
         {
 
             // tamanhoPagina = 1
@@ -61,23 +62,12 @@ namespace JogoForca.Repositorio
 
             using (var context = new ContextoDeDados())
             {
-                if(filtro == "")
-                {
                     return context.Jogada
+                    .Include("Usuario")
                     .OrderBy(_ => _.Pontos)
                     .Skip(tamanhoPagina * (pagina - 1))
                     .Take(tamanhoPagina)
                     .ToArray();
-                }else
-                {
-                    return context.Jogada
-                    .OrderByDescending(_ => _.Pontos)
-                    .ThenBy(_ => _.Usuario.Nome)
-                    .Skip(tamanhoPagina * (pagina - 1))
-                    .Take(tamanhoPagina)
-                    .ToArray();
-                }
-                
             }
         }
     }

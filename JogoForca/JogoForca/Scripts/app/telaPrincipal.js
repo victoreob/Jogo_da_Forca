@@ -16,7 +16,6 @@ class TelaPrincipal {
   registrarBindsEventos() {
     this.validarLetraFomulario();
     this.validarPalavraFormulario();
-    this.validarFiltroFormulario();
     let self = this;
     self.$btnProximaPagina = $('#btn-proxima-pagina');
     self.$btnPaginaAnterior = $('#btn-pagina-anterior');
@@ -60,27 +59,22 @@ class TelaPrincipal {
   }
 
   carregarERenderizarJogadas(pagina) {
-    self.jogadas.buscarRanking(pagina)
+    let self = this;
+    this.jogadas.buscarRanking(pagina)
           .done(function (res) {
-            self.paginaAtual = res[0];
-            let jogadas = [];
-            for (let x = 0; x < res[1].length; xi++) {
-              self.usuarios.buscarPorId(res[1][x].UsuarioRefId)
-                .done(function (res) {
-                  nomes.push(res.Nome);
-                });
-            }
+            console.log(res);
+            self.paginaAtual = res.pagina;
             let jogadasLeaderboard = [];
-            for (let i = 0; i < res[1].length; i++) {
+            for (let i = 0; i < res.dados.length; i++) {
               jogadasLeaderboard[i] = {
-                pontuacao: (self.paginaAtual * res[1].length) - res[1].length + i,
-                nome: nomes[i],
-                pontuacao: res[1].Pontos,
-                dificuldade: res[1].Dificuldade
+                posicao: (self.paginaAtual * res.dados.length) - res.dados.length + i,
+                nome: res.dados[i].Usuario.Nome,
+                pontuacao: res.dados[i].Pontos,
+                dificuldade: res.dados[i].Dificuldade
               };
             }
             $('#Leaderboard').show();
-            jogoDaForca.render('#jogadas', 'leaderboard', jogadasLeaderboard);
+            jogoDaForca.render('#jogadas', 'leaderboard', { chars: jogadasLeaderboard });
           });
   }
 
@@ -348,64 +342,5 @@ class TelaPrincipal {
         $('#div-palpite-palavra').show();
         $('#div-palpite-letra').show();
       });
-  }
-
-  validarFiltroFormulario() {
-    this.$formFiltro = $('#form-filtro-usuario');
-    this.$btnSubmitFiltro = this.$formFiltro.find('button[type=submit]');
-    let self = this;
-    this.$formFiltro.submit((e) => {
-      try {
-        clearTimeout(self.gameOverBH);
-        self.$btnSubmitFiltro.text('Palpitando...');
-        self.$btnSubmitFiltro.attr('disabled', true);
-        let filtro = self.$formFiltro.find('#filtro').val();
-        self.jogadas.buscarRanking(filtro)
-          .done(function (res) {
-            self.paginaAtual = res[0];
-            let jogadas =[];
-            for (let x = 0; x < res[1].length;xi++) {
-              self.usuarios.buscarPorId(res[1][x].UsuarioRefId)
-                .done(function(res){
-                  nomes.push(res.Nome);
-                });
-            }
-            let jogadasLeaderboard = [];
-            for (let i = 0; i < res[1].length; i++) {
-              jogadasLeaderboard[i] = {
-                pontuacao: (self.paginaAtual * res[1].length)- res[1].length+i,
-                nome: nomes[i],
-                pontuacao: res[1].Pontos,
-                dificuldade: res[1].Dificuldade
-              };
-            }
-            jogoDaForca.render('#jogadas', 'leaderboard', jogadasLeaderboard);
-          });
-        return e.preventDefault();
-      }
-      catch (erro) {
-        console.error('ops, erro:', erro);
-      }
-    });
-
-    let validator = this.$formFiltro.validate({
-      highlight: function (element, errorClass, validClass) {
-        $(element).closest('.form-group').addClass('has-error');
-      },
-      unhighlight: function (element, errorClass, validClass) {
-        $(element).closest('.form-group').removeClass('has-error');
-      },
-      showErrors: function () {
-        if (validator.numberOfInvalids() === 0) {
-          self.$btnSubmitFiltro.removeAttr('disabled');
-        } else {
-          self.$btnSubmitFiltro.attr('disabled', true);
-        }
-        this.defaultShowErrors();
-      },
-      submitHandler: function () {
-        return false;
-      }
-    });
   }
 }

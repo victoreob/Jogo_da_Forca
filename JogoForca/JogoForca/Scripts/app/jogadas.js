@@ -26,7 +26,7 @@
     return $.get('api/Jogadas', { idUsuario: jogada.UsuarioRefId, dificuldade: jogada.Dificuldade });
   }
 
-  buscarRanking(pagina, filtro) {
-    return $.get('api/usuarios/buscarRanking', { pagina: pagina, filtro: filtro });
+  buscarRanking(pagina) {
+    return $.get('api/jogadas/ranking', { pagina: pagina });
   }
 }
