@@ -27,6 +27,6 @@
   }
 
   buscarRanking(pagina, filtro) {
-    return $.get('api/usuarios/buscarRanking', { pagina: pagina, filtro: filtro);
+    return $.get('api/usuarios/buscarRanking', { pagina: pagina, filtro: filtro });
   }
 }

@@ -350,7 +350,7 @@ class TelaPrincipal {
       });
   }
 
-  validarFiltroFomulario() {
+  validarFiltroFormulario() {
     this.$formFiltro = $('#form-filtro-usuario');
     this.$btnSubmitFiltro = this.$formFiltro.find('button[type=submit]');
     let self = this;
